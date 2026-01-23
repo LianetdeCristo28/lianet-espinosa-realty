@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Brain, CreditCard, Landmark, Compass, Home, PenTool, FileText, Key, CheckCircle2, ArrowRight, X, Star } from "lucide-react";
+import { Brain, CreditCard, Landmark, Compass, Home, PenTool, FileText, Key, CheckCircle2, ArrowRight, X, Star, Sparkles, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -13,8 +13,10 @@ interface StepContent {
   title: string;
   shortDesc: string;
   icon: React.ElementType;
-  checklist: string[];
+  whatToDo: string[];
   toAdvance: string[];
+  realtorValue: string;
+  gptAgentId: string; // Placeholder for future linking
   isGoal?: boolean;
 }
 
@@ -22,125 +24,134 @@ const stepsData: StepContent[] = [
   {
     id: 1,
     title: "Decisión",
-    shortDesc: "Claridad total",
+    shortDesc: "Claridad y metas",
     icon: Brain,
-    checklist: [
-      "Definir presupuesto mensual ideal",
-      "Listar zonas de interés reales",
-      "Separar 'lo que necesito' de 'lo que quiero'",
-      "Visualizar tu vida en 5 años"
+    whatToDo: [
+      "Define tus 'must-haves' vs. 'nice-to-haves'.",
+      "Alinea expectativas con tu familia o pareja.",
+      "Calcula tu presupuesto mensual ideal (sin agobiarte)."
     ],
     toAdvance: [
-      "Tener una lista escrita de tus 3 prioridades no negociables."
-    ]
+      "Tener claras tus 3 prioridades no negociables."
+    ],
+    realtorValue: "Lianet te ayuda a traducir tus deseos en un plan realista, filtrando lo que el mercado realmente ofrece en tu zona.",
+    gptAgentId: "decision-gpt"
   },
   {
     id: 2,
     title: "Finanzas",
-    shortDesc: "Poder de compra",
+    shortDesc: "Salud financiera",
     icon: CreditCard,
-    checklist: [
-      "Revisar tu reporte de crédito actual",
-      "Calcular ahorros disponibles para enganche",
-      "Juntar estados de cuenta (últimos 2 meses)",
-      "Identificar deudas que podrías liquidar"
+    whatToDo: [
+      "Revisa tu puntaje de crédito y corrige errores.",
+      "Suma tus ahorros para el enganche y gastos de cierre.",
+      "Junta tus documentos (nóminas, estados de cuenta)."
     ],
     toAdvance: [
-      "Saber exactamente cuánto dinero líquido tienes disponible hoy."
-    ]
+      "Conocer tu capacidad de compra real."
+    ],
+    realtorValue: "Lianet te conecta con prestamistas de confianza y te alerta sobre gastos ocultos que los calculadores online no ven.",
+    gptAgentId: "finanzas-gpt"
   },
   {
     id: 3,
     title: "Preaprobación",
-    shortDesc: "Dinero seguro",
+    shortDesc: "Presupuesto real",
     icon: Landmark,
-    checklist: [
-      "Enviar documentos al oficial de préstamo",
-      "Evitar abrir nuevos créditos (tarjetas, autos)",
-      "Recibir carta de pre-aprobación formal",
-      "Entender tu tasa de interés y mensualidad"
+    whatToDo: [
+      "Compara opciones de préstamo con varios bancos.",
+      "Elige al prestamista que te explique mejor, no solo el más barato.",
+      "Obtén tu carta de pre-aprobación oficial."
     ],
     toAdvance: [
-      "Tener la carta de pre-aprobación en tu email."
-    ]
+      "Tener la carta de pre-aprobación en mano."
+    ],
+    realtorValue: "Una carta de pre-aprobación sólida hace que los vendedores te tomen en serio. Lianet asegura que tu oferta sea competitiva desde el día uno.",
+    gptAgentId: "preaprobacion-gpt"
   },
   {
     id: 4,
     title: "Estrategia",
-    shortDesc: "Plan de ataque",
+    shortDesc: "Plan de mercado",
     icon: Compass,
-    checklist: [
-      "Seleccionar a tu agente experto",
-      "Analizar el mercado en tus zonas (precios reales)",
-      "Definir estrategia de oferta (agresiva vs conservadora)",
-      "Programar alertas de nuevas propiedades"
+    whatToDo: [
+      "Selecciona las zonas que se ajustan a tu vida y presupuesto.",
+      "Define el tipo de propiedad (casa, condo, townhome).",
+      "Establece tiempos: ¿cuándo necesitas mudarte?"
     ],
     toAdvance: [
-      "Agente contratado y calendario de visitas listo."
-    ]
+      "Tener un calendario de visitas y alertas activas."
+    ],
+    realtorValue: "Lianet analiza los datos del mercado local para decirte si una zona está subiendo o bajando de precio, protegiendo tu inversión.",
+    gptAgentId: "estrategia-gpt"
   },
   {
     id: 5,
     title: "Búsqueda",
-    shortDesc: "Caza de casa",
+    shortDesc: "Visitas inteligentes",
     icon: Home,
-    checklist: [
-      "Visitar propiedades filtradas (calidad > cantidad)",
-      "Tomar notas y fotos de cada visita",
-      "Evaluar reparaciones potenciales",
-      "Revisar el vecindario en diferentes horarios"
+    whatToDo: [
+      "Visita propiedades filtradas por calidad, no cantidad.",
+      "Mira más allá de la decoración (paredes, techos, olores).",
+      "Toma notas y compara objetivamente."
     ],
     toAdvance: [
-      "Encontrar esa casa que te hace decir 'es esta'."
-    ]
+      "Encontrar la casa que cumple tus 3 no-negociables."
+    ],
+    realtorValue: "Lianet ve lo que tú no ves: problemas estructurales, ruidos del vecindario y el potencial real de reventa.",
+    gptAgentId: "busqueda-gpt"
   },
   {
     id: 6,
     title: "Oferta",
-    shortDesc: "Negociación",
+    shortDesc: "Hacerlo oficial",
     icon: PenTool,
-    checklist: [
-      "Análisis comparativo de mercado (CMA)",
-      "Escribir oferta competitiva con tu agente",
-      "Decidir monto de depósito de garantía (Earnest Money)",
-      "Negociar contraofertas si es necesario"
+    whatToDo: [
+      "Decide el precio basado en datos comparables.",
+      "Define las contingencias (inspección, financiamiento).",
+      "Envía la oferta por escrito con seriedad."
     ],
     toAdvance: [
-      "Oferta aceptada y firmada por ambas partes."
-    ]
+      "Tener una oferta aceptada y firmada."
+    ],
+    realtorValue: "Aquí es donde Lianet brilla: negocia el precio y los términos a tu favor, usando su experiencia para ganar en mercados competitivos.",
+    gptAgentId: "oferta-gpt"
   },
   {
     id: 7,
     title: "Proceso",
-    shortDesc: "Bajo contrato",
+    shortDesc: "Cierre seguro",
     icon: FileText,
-    checklist: [
-      "Realizar inspección física de la casa",
-      "Gestionar el avalúo (Appraisal) del banco",
-      "Revisión final de préstamo (Underwriting)",
-      "Negociar reparaciones basadas en inspección"
+    whatToDo: [
+      "Coordina la inspección física de la casa.",
+      "Espera el avalúo (appraisal) del banco.",
+      "Revisa y firma los documentos finales de cierre."
     ],
     toAdvance: [
-      "Recibir el 'Clear to Close' del banco."
-    ]
+      "Recibir el 'Clear to Close' y fecha de firma."
+    ],
+    realtorValue: "Lianet es la directora de orquesta: coordina inspectores, abogados y banco para que no pierdas fechas ni dinero.",
+    gptAgentId: "cierre-gpt"
   },
   {
     id: 8,
     title: "Casa Comprada",
     shortDesc: "¡Meta cumplida!",
     icon: Key,
-    checklist: [
-      "Revisión final de la casa (Walkthrough)",
-      "Firmar escrituras en notaría/título",
-      "Transferir fondos de cierre",
-      "¡Celebrar y recibir tus llaves!"
+    whatToDo: [
+      "Haz la caminata final (walkthrough) de la casa.",
+      "Recibe tus llaves y celebra.",
+      "Guarda todos tus documentos importantes."
     ],
     toAdvance: [
-      "¡Mudarte a tu nuevo hogar!"
+      "¡Mudarte y disfrutar tu nuevo hogar!"
     ],
+    realtorValue: "La relación no termina aquí. Lianet sigue siendo tu recurso para dudas sobre impuestos, valor de casa o proveedores de confianza.",
+    gptAgentId: "meta-gpt",
     isGoal: true
   }
 ];
+
 
 export const Staircase = () => {
   const [activeStepId, setActiveStepId] = useState<number | null>(null);
@@ -327,10 +338,10 @@ const StepDetailContent = ({ step, onNext, onClose, isMobile = false }: { step: 
                     <div>
                         <h4 className="text-sm font-bold uppercase tracking-wide text-muted-foreground mb-3 flex items-center gap-2">
                            <CheckCircle2 className="w-4 h-4 text-primary" />
-                           Tu Lista de Misión
+                           Qué haces aquí:
                         </h4>
                         <ul className="space-y-3">
-                            {step.checklist.map((item, i) => (
+                            {step.whatToDo.map((item, i) => (
                                 <motion.li 
                                     key={i} 
                                     initial={{ opacity: 0, x: -10 }}
@@ -343,6 +354,15 @@ const StepDetailContent = ({ step, onNext, onClose, isMobile = false }: { step: 
                                 </motion.li>
                             ))}
                         </ul>
+                    </div>
+
+                    {/* Realtor Value Prop */}
+                    <div className="bg-[#E5E1D8]/50 p-4 rounded-xl border border-[#BDB2A4]/30 flex gap-3">
+                        <div className="shrink-0 bg-[#17140F] text-white w-8 h-8 rounded-full flex items-center justify-center font-serif font-bold">L</div>
+                        <div>
+                            <p className="text-xs font-bold uppercase text-[#17140F]/60 mb-1">Tu Realtor: Lianet Espinosa Ojeda</p>
+                            <p className="text-sm text-[#17140F] italic leading-relaxed">"{step.realtorValue}"</p>
+                        </div>
                     </div>
 
                     <div className="bg-[#D2B463]/10 p-4 rounded-xl border border-[#D2B463]/20">
@@ -359,13 +379,23 @@ const StepDetailContent = ({ step, onNext, onClose, isMobile = false }: { step: 
             </ScrollArea>
 
             {/* Footer Actions */}
-            <div className="p-6 pt-4 border-t bg-white mt-auto">
+            <div className="p-6 pt-4 border-t bg-white mt-auto space-y-3">
                 <Button 
-                    onClick={onNext}
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6 shadow-lg shadow-primary/20 group"
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-md py-6 shadow-lg shadow-primary/20 group justify-between"
                 >
-                    {step.isGoal ? "¡Celebrar!" : "Siguiente Paso"} 
-                    {!step.isGoal && <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />}
+                    <span className="flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 fill-current" />
+                        Profundizar este paso con IA
+                    </span>
+                    <ArrowRight className="w-4 h-4 opacity-70" />
+                </Button>
+
+                <Button 
+                    variant="outline"
+                    className="w-full border-[#BDB2A4] text-[#17140F] hover:bg-[#E5E1D8] text-sm py-5"
+                >
+                   <MessageSquare className="w-4 h-4 mr-2" />
+                   Hablar con mi Realtor – Lianet Espinosa
                 </Button>
             </div>
         </div>
