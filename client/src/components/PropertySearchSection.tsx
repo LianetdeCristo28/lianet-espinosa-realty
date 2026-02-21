@@ -3,7 +3,7 @@ import { Search, MapPin } from "lucide-react";
 
 export const PropertySearchSection = () => {
   return (
-    <section className="py-24 bg-[#E5E1D8]">
+    <section id="buscar" className="py-24 bg-[#E5E1D8]">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#17140F] mb-6">
           Explora propiedades en tiempo real

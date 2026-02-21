@@ -20,10 +20,10 @@ export const Footer = () => {
         <div>
           <h4 className="text-white font-bold mb-6 uppercase tracking-wider text-xs">Enlaces Rápidos</h4>
           <ul className="space-y-3 text-sm">
-            <li><a href="#core-path" className="hover:text-primary transition-colors">Para Compradores</a></li>
+            <li><a href="#compradores" className="hover:text-primary transition-colors">Para Compradores</a></li>
             <li><a href="#vendedores" className="hover:text-primary transition-colors">Para Vendedores</a></li>
             <li><a href="#inversionistas" className="hover:text-primary transition-colors">Para Inversionistas</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Buscar Propiedades</a></li>
+            <li><a href="#buscar" className="hover:text-primary transition-colors">Buscar Propiedades</a></li>
           </ul>
         </div>
         

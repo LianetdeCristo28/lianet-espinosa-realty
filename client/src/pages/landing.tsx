@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Staircase } from "@/components/Staircase";
 import { DiagnosticModal } from "@/components/DiagnosticModal";
 import { LeadCaptureModal } from "@/components/LeadCaptureModal";
-import { Nav } from "@/components/Nav";
+import { Navbar } from "@/components/Navbar";
 import { VendedoresSection } from "@/components/VendedoresSection";
 import { InversionistasSection } from "@/components/InversionistasSection";
 import { RealtorsIASection } from "@/components/RealtorsIASection";
@@ -18,7 +18,7 @@ export default function LandingPage() {
   const [leadModalOpen, setLeadModalOpen] = useState(false);
 
   const scrollToSteps = () => {
-    const element = document.getElementById('core-path');
+    const element = document.getElementById('compradores');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
@@ -26,7 +26,7 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans overflow-x-hidden pt-16">
-      <Nav />
+      <Navbar />
       {/* 1) HERO SECTION */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         {/* Background Image with Overlay */}
@@ -137,7 +137,7 @@ export default function LandingPage() {
       </section>
 
       {/* 3) CORE SECTION (STAIRCASE) */}
-      <section id="core-path" className="py-24 bg-[#F8F6F2] relative overflow-hidden">
+      <section id="compradores" className="py-24 bg-[#F8F6F2] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">El Método</span>

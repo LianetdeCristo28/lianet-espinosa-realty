@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export const RealtorsIASection = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-[#F8F6F2] to-white">
+    <section id="realtors-ia" className="py-24 bg-gradient-to-b from-[#F8F6F2] to-white">
       <div className="max-w-7xl mx-auto px-6 text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
