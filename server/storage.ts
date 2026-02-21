@@ -3,15 +3,30 @@ import pg from "pg";
 import { eq, desc } from "drizzle-orm";
 import { type User, type InsertUser, type Lead, type InsertLead, users, leads } from "@shared/schema";
 
-const connectionString = process.env.SUPABASE_DATABASE_URL || process.env.DATABASE_URL;
+const supabaseUrl = process.env.SUPABASE_DATABASE_URL;
+const fallbackUrl = process.env.DATABASE_URL;
 
-if (!connectionString) {
+if (!supabaseUrl && !fallbackUrl) {
   throw new Error("No se encontró una URL de conexión a la base de datos. Configura SUPABASE_DATABASE_URL en las variables de entorno.");
 }
 
-const pool = new pg.Pool({
-  connectionString,
-});
+let pool: pg.Pool;
+
+if (supabaseUrl) {
+  const parsed = new URL(supabaseUrl);
+  pool = new pg.Pool({
+    user: decodeURIComponent(parsed.username),
+    password: decodeURIComponent(parsed.password),
+    host: parsed.hostname,
+    port: parseInt(parsed.port, 10),
+    database: parsed.pathname.slice(1),
+    ssl: { rejectUnauthorized: false },
+  });
+} else {
+  pool = new pg.Pool({
+    connectionString: fallbackUrl,
+  });
+}
 
 const db = drizzle(pool);
 
