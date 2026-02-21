@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Staircase } from "@/components/Staircase";
 import { DiagnosticModal } from "@/components/DiagnosticModal";
-import { LeadCaptureModal } from "@/components/LeadCaptureModal";
+import { LeadModal } from "@/components/LeadModal";
 import { Navbar } from "@/components/Navbar";
 import { VendedoresSection } from "@/components/VendedoresSection";
 import { InversionistasSection } from "@/components/InversionistasSection";
@@ -292,7 +292,7 @@ export default function LandingPage() {
       <DiagnosticModal open={diagnosticOpen} onOpenChange={setDiagnosticOpen} />
       
       {/* Lead Capture Modal */}
-      <LeadCaptureModal open={leadModalOpen} onOpenChange={setLeadModalOpen} context={leadContext} />
+      <LeadModal open={leadModalOpen} onOpenChange={setLeadModalOpen} context={(leadContext as any) || "general"} />
 
       {/* Chatbot */}
       <ChatbotAna />

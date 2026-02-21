@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { LeadCaptureModal } from "@/components/LeadCaptureModal";
+import { LeadModal } from "@/components/LeadModal";
 
 const cities = ["Miami", "Orlando", "Tampa", "Jacksonville", "Fort Lauderdale", "Otra"];
 const prices = ["$200K", "$300K", "$400K", "$500K", "$750K", "$1M+"];
@@ -116,7 +116,7 @@ export const PropertySearchSection = () => {
         </p>
       </div>
 
-      <LeadCaptureModal open={leadOpen} onOpenChange={handleLeadClose} context="busqueda" />
+      <LeadModal open={leadOpen} onOpenChange={handleLeadClose} context="busqueda" />
     </section>
   );
 };

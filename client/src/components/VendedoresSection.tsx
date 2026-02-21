@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { LeadCaptureModal } from "@/components/LeadCaptureModal";
+import { LeadModal } from "@/components/LeadModal";
 import { BarChart3, DollarSign, Camera, Handshake, CheckCircle } from "lucide-react";
 
 const steps = [
@@ -98,7 +98,7 @@ export const VendedoresSection = () => {
         </motion.div>
       </div>
 
-      <LeadCaptureModal open={leadOpen} onOpenChange={setLeadOpen} context="vendedor" />
+      <LeadModal open={leadOpen} onOpenChange={setLeadOpen} context="vendedor" />
     </section>
   );
 };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { LeadCaptureModal } from "@/components/LeadCaptureModal";
+import { LeadModal } from "@/components/LeadModal";
 import { TrendingUp, Banknote, Building, Home, Hammer } from "lucide-react";
 
 const metrics = [
@@ -105,7 +105,7 @@ export const InversionistasSection = () => {
         </div>
       </div>
 
-      <LeadCaptureModal open={leadOpen} onOpenChange={setLeadOpen} context="inversionista" />
+      <LeadModal open={leadOpen} onOpenChange={setLeadOpen} context="inversionista" />
     </section>
   );
 };
