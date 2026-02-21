@@ -15,7 +15,11 @@ export const PropertySearchSection = () => {
   const [leadOpen, setLeadOpen] = useState(false);
 
   const goToIDX = () => {
-    // TODO: window.open('URL_LOFTY_IDX', '_blank');
+    // === INTEGRACIÓN LOFTY IDX ===
+    // URL: process.env.LOFTY_IDX_URL (configurar en variables de entorno)
+    // Se usa para abrir búsqueda de propiedades en portal MLS
+    // Opciones: iframe embed o redirect
+    // Ejemplo: window.open(`${LOFTY_IDX_URL}?city=${city}&price=${maxPrice}&beds=${beds}`, '_blank');
     console.log("goToIDX: redirigir a portal IDX", { city, maxPrice, beds });
   };
 

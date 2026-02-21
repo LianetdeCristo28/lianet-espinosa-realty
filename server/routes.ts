@@ -3,6 +3,15 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertLeadSchema } from "@shared/schema";
 
+// === INTEGRACIÓN n8n ===
+// Webhook URL: process.env.N8N_WEBHOOK_URL
+// Se dispara al capturar un lead
+// Payload: { lead, source, timestamp }
+
+// === ANALYTICS ===
+// Google Analytics 4: process.env.GA4_MEASUREMENT_ID
+// Facebook Pixel: process.env.FB_PIXEL_ID
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express
@@ -12,12 +21,15 @@ export async function registerRoutes(
       const validated = insertLeadSchema.parse(req.body);
       const lead = await storage.insertLead(validated);
 
-      // TODO: Enviar a webhook n8n
-      // await fetch(process.env.N8N_WEBHOOK_URL, {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(lead)
-      // });
+      // === INTEGRACIÓN n8n ===
+      // Descomentar cuando N8N_WEBHOOK_URL esté configurado en secrets
+      // if (process.env.N8N_WEBHOOK_URL) {
+      //   await fetch(process.env.N8N_WEBHOOK_URL, {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({ lead, source: lead.source, timestamp: new Date().toISOString() })
+      //   });
+      // }
 
       res.json({ success: true, lead });
     } catch (error) {

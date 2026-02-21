@@ -2,6 +2,12 @@ import { useState } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// === AGENTE ANA (Chatbot IA) ===
+// Widget flotante bottom-right
+// Conectar con: OpenAI API / Anthropic API / custom n8n flow
+// Componente placeholder: ChatbotAna.tsx
+// Para activar: configurar API key en secrets y conectar endpoint /api/chat
+
 export const ChatbotAna = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -9,6 +15,7 @@ export const ChatbotAna = () => {
     <>
       <button 
         onClick={() => setIsOpen(true)}
+        aria-label="Abrir chat con Ana, asistente IA"
         className="fixed bottom-24 md:bottom-8 right-6 md:right-8 z-50 w-14 h-14 bg-primary text-[#17140F] rounded-full shadow-md flex items-center justify-center hover:scale-105 transition-all duration-300 hover:bg-primary/90"
       >
         <MessageCircle className="w-6 h-6" />
@@ -32,7 +39,7 @@ export const ChatbotAna = () => {
                   <span className="text-xs text-white/60">Asistente IA</span>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-white/60 hover:text-white p-2">
+              <button onClick={() => setIsOpen(false)} aria-label="Cerrar chat" className="text-white/60 hover:text-white p-2">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -50,7 +57,7 @@ export const ChatbotAna = () => {
                   placeholder="Escribe tu mensaje..." 
                   className="flex-1 bg-[#F8F6F2] border border-[#BDB2A4]/30 rounded-full px-4 py-2 text-sm outline-none focus:border-primary"
                 />
-                <button className="bg-primary text-[#17140F] p-2 rounded-full flex-shrink-0 hover:bg-primary/90">
+                <button aria-label="Enviar mensaje" className="bg-primary text-[#17140F] p-2 rounded-full flex-shrink-0 hover:bg-primary/90">
                   <Send className="w-4 h-4 ml-0.5" />
                 </button>
               </div>
