@@ -3,12 +3,14 @@ import pg from "pg";
 import { eq, desc } from "drizzle-orm";
 import { type User, type InsertUser, type Lead, type InsertLead, users, leads } from "@shared/schema";
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL no está configurado. Agrega la variable de entorno en Replit secrets.");
+const connectionString = process.env.SUPABASE_DATABASE_URL || process.env.DATABASE_URL;
+
+if (!connectionString) {
+  throw new Error("No se encontró una URL de conexión a la base de datos. Configura SUPABASE_DATABASE_URL en las variables de entorno.");
 }
 
 const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString,
 });
 
 const db = drizzle(pool);
