@@ -45,4 +45,4 @@ mockupState = "FULLSTACK"
 [userenv]
 
 [userenv.shared]
-SUPABASE_DATABASE_URL = "postgres://postgres:SolodeCristo28@db.gjxxjdfjfqvrywflnzmf.supabase.co:6543/postgres"
+DATABASE_URL = "postgres://postgres:SolodeCristo28@db.gjxxjdfjfqvrywflnzmf.supabase.co:6543/postgres"
