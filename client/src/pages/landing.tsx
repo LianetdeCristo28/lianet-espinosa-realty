@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from "react";
+import React, { useState, useRef, lazy, Suspense } from "react";
 import { Staircase } from "@/components/Staircase";
 import { DiagnosticModal } from "@/components/DiagnosticModal";
 import { LeadModal } from "@/components/LeadModal";
@@ -14,14 +14,33 @@ import { Button } from "@/components/ui/button";
 import { ArrowDown, Check } from "lucide-react";
 import { motion } from "framer-motion";
 
+const LOFTY_BASE_URL = "https://lianetespinosaojeda.expportal.com/listing";
+
 export default function LandingPage() {
   const [diagnosticOpen, setDiagnosticOpen] = useState(false);
   const [leadModalOpen, setLeadModalOpen] = useState(false);
   const [leadContext, setLeadContext] = useState<string | undefined>();
+  const [leadCaptured, setLeadCaptured] = useState(false);
+  const heroLinkRef = useRef<HTMLAnchorElement>(null);
+
+  const handleLeadCaptured = () => {
+    setLeadCaptured(true);
+    console.log("[Hero] Lead captured — future clicks go directly to:", LOFTY_BASE_URL);
+  };
 
   const openLeadModal = (context?: string) => {
     setLeadContext(context);
     setLeadModalOpen(true);
+  };
+
+  const handleHeroExplorar = (e: React.MouseEvent) => {
+    if (!leadCaptured) {
+      e.preventDefault();
+      console.log("[Hero] Lead not captured yet — opening LeadModal");
+      openLeadModal("busqueda");
+    } else {
+      console.log("[Hero] Redirecting to:", LOFTY_BASE_URL);
+    }
   };
 
   const scrollToCompradores = () => {
@@ -78,13 +97,17 @@ export default function LandingPage() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button
+                <a
+                  ref={heroLinkRef}
                   data-testid="button-explorar-propiedades"
-                  onClick={() => openLeadModal()}
-                  className="bg-primary text-primary-foreground text-lg px-8 py-7 rounded-full shadow-lg shadow-primary/20 hover:scale-105 transition-transform hover:bg-primary/90"
+                  href={LOFTY_BASE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={handleHeroExplorar}
+                  className="inline-flex items-center justify-center bg-primary text-primary-foreground text-lg px-8 py-7 rounded-full shadow-lg shadow-primary/20 hover:scale-105 transition-transform hover:bg-primary/90 font-medium cursor-pointer"
                 >
                   Explorar Propiedades
-                </Button>
+                </a>
                 <Button
                   data-testid="button-por-donde-empezar"
                   variant="outline"
@@ -300,7 +323,7 @@ export default function LandingPage() {
 
       {/* Modales */}
       <DiagnosticModal open={diagnosticOpen} onOpenChange={setDiagnosticOpen} />
-      <LeadModal open={leadModalOpen} onOpenChange={setLeadModalOpen} context={(leadContext as any) || "general"} />
+      <LeadModal open={leadModalOpen} onOpenChange={setLeadModalOpen} context={(leadContext as any) || "general"} onLeadCaptured={handleLeadCaptured} />
 
       {/* Chatbot */}
       <Suspense fallback={null}>

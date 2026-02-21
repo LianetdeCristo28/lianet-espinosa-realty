@@ -16,6 +16,7 @@ interface LeadModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   context?: LeadContext;
+  onLeadCaptured?: () => void;
 }
 
 const cities = ["Miami", "Orlando", "Tampa", "Jacksonville", "Fort Lauderdale", "Otra"];
@@ -306,7 +307,7 @@ function parseBudgetToNumber(budget: string): string {
   return "";
 }
 
-export const LeadModal = ({ open, onOpenChange, context = "general" }: LeadModalProps) => {
+export const LeadModal = ({ open, onOpenChange, context = "general", onLeadCaptured }: LeadModalProps) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -332,6 +333,7 @@ export const LeadModal = ({ open, onOpenChange, context = "general" }: LeadModal
       return res.json();
     },
     onSuccess: () => {
+      onLeadCaptured?.();
       if (context === "busqueda" || context === "general") {
         setShowRedirectTransition(true);
       } else {
