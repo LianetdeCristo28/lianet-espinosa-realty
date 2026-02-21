@@ -5,11 +5,18 @@ import { CheckCircle2, Loader2 } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 
-export const LeadCaptureModal = ({ open, onOpenChange }: { open: boolean, onOpenChange: (o: boolean) => void }) => {
+interface LeadCaptureModalProps {
+  open: boolean;
+  onOpenChange: (o: boolean) => void;
+  context?: string;
+}
+
+export const LeadCaptureModal = ({ open, onOpenChange, context }: LeadCaptureModalProps) => {
+  const defaultInterest = context === "comprador" ? "Quiero comprar" : context === "vendedor" ? "Quiero vender" : context === "inversionista" ? "Busco invertir" : "Quiero comprar";
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [interest, setInterest] = useState("Quiero comprar");
+  const [interest, setInterest] = useState(defaultInterest);
   const [submitted, setSubmitted] = useState(false);
 
   const mutation = useMutation({
@@ -34,7 +41,7 @@ export const LeadCaptureModal = ({ open, onOpenChange }: { open: boolean, onOpen
         setName("");
         setPhone("");
         setEmail("");
-        setInterest("Quiero comprar");
+        setInterest(defaultInterest);
         setSubmitted(false);
         mutation.reset();
       }, 300);
