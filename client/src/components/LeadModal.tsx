@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { CheckCircle2, Loader2, Shield, Database, Filter, Sparkles, KeyRound, ArrowUpRight } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 type LeadContext = "comprador" | "vendedor" | "inversionista" | "busqueda" | "general";
 
@@ -21,8 +21,6 @@ interface LeadModalProps {
 const cities = ["Miami", "Orlando", "Tampa", "Jacksonville", "Fort Lauderdale", "Otra"];
 const budgets = ["$100K-200K", "$200K-300K", "$300K-400K", "$400K-500K", "$500K-750K", "$750K-1M", "$1M+"];
 const bedroomOptions = ["1", "2", "3", "4", "5+"];
-
-const LOFTY_BASE_URL = "https://lianetespinosaojeda.expportal.com";
 
 const contextToProfile: Record<string, string> = {
   comprador: "comprador",
@@ -50,13 +48,6 @@ interface TransitionStage {
   duration: number;
 }
 
-const fadeSlideUp = {
-  initial: { opacity: 0, y: 16 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -12 },
-  transition: { duration: 0.4, ease: "easeOut" as const },
-};
-
 const scaleIn = {
   initial: { opacity: 0, scale: 0.85 },
   animate: { opacity: 1, scale: 1 },
@@ -64,11 +55,14 @@ const scaleIn = {
 };
 
 const RedirectTransition = ({ city, loftyUrl }: { city: string; loftyUrl: string }) => {
+  const urlRef = useRef(loftyUrl);
   const [phase, setPhase] = useState<RedirectPhase>("loading");
   const [currentStage, setCurrentStage] = useState(0);
   const [stageProgress, setStageProgress] = useState(0);
   const [completedStages, setCompletedStages] = useState<number[]>([]);
   const progressInterval = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  console.log("RedirectTransition URL:", urlRef.current);
 
   const stages: TransitionStage[] = [
     { label: "Verificando tu perfil", icon: <Shield className="w-4 h-4" />, duration: 800 },
@@ -138,7 +132,7 @@ const RedirectTransition = ({ city, loftyUrl }: { city: string; loftyUrl: string
         </div>
 
         <a
-          href={loftyUrl}
+          href={urlRef.current}
           target="_blank"
           rel="noopener noreferrer"
           data-testid="link-ver-propiedades"
@@ -268,6 +262,50 @@ const RedirectTransition = ({ city, loftyUrl }: { city: string; loftyUrl: string
   );
 };
 
+function buildLoftyURL(filters: { city?: string; maxPrice?: string; beds?: string }): string {
+  const base = "https://lianetespinosaojeda.expportal.com";
+
+  if (!filters.city && !filters.maxPrice && !filters.beds) {
+    return `${base}/listing`;
+  }
+
+  const condition: Record<string, unknown> = {};
+
+  if (filters.city && filters.city !== "Otra") {
+    condition.location = { city: [`${filters.city}, FL`] };
+  }
+
+  if (filters.maxPrice) {
+    condition.price = `,${filters.maxPrice}`;
+  }
+
+  if (filters.beds) {
+    condition.beds = `${filters.beds},`;
+  }
+
+  const params = new URLSearchParams({
+    listingSource: "all listings",
+    condition: JSON.stringify(condition),
+    uiConfig: "{}",
+    zoom: "13",
+    page: "1",
+  });
+
+  return `${base}/listing?${params.toString()}`;
+}
+
+function parseBudgetToNumber(budget: string): string {
+  const parts = budget.replace(/\$/g, "").split("-");
+  const maxPart = parts.length > 1 ? parts[1] : parts[0];
+  if (maxPart.includes("M") || maxPart.includes("m")) {
+    return String(parseFloat(maxPart.replace(/[^0-9.]/g, "")) * 1000000);
+  }
+  if (maxPart.includes("K") || maxPart.includes("k")) {
+    return String(parseFloat(maxPart.replace(/[^0-9.]/g, "")) * 1000);
+  }
+  return "";
+}
+
 export const LeadModal = ({ open, onOpenChange, context = "general" }: LeadModalProps) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -282,49 +320,11 @@ export const LeadModal = ({ open, onOpenChange, context = "general" }: LeadModal
   const [submitted, setSubmitted] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [showRedirectTransition, setShowRedirectTransition] = useState(false);
+  const loftyUrlRef = useRef<string>("https://lianetespinosaojeda.expportal.com/listing");
 
   useEffect(() => {
     setProfileType(contextToProfile[context] || "");
   }, [context]);
-
-  const buildLoftyUrl = () => {
-    if (!city && !budget && !bedrooms) {
-      return `${LOFTY_BASE_URL}/listing`;
-    }
-
-    const condition: Record<string, unknown> = {};
-
-    if (city && city !== "Otra") {
-      condition.location = { city: [`${city}, FL`] };
-    }
-
-    if (budget) {
-      const parts = budget.replace(/\$/g, "").split("-");
-      const maxPart = parts.length > 1 ? parts[1] : parts[0];
-      let priceNum = "";
-      if (maxPart.includes("M") || maxPart.includes("m")) {
-        priceNum = String(parseFloat(maxPart.replace(/[^0-9.]/g, "")) * 1000000);
-      } else if (maxPart.includes("K") || maxPart.includes("k")) {
-        priceNum = String(parseFloat(maxPart.replace(/[^0-9.]/g, "")) * 1000);
-      }
-      if (priceNum) condition.price = `,${priceNum}`;
-    }
-
-    if (bedrooms) {
-      const bedsVal = bedrooms.replace("+", "");
-      condition.beds = `${bedsVal},`;
-    }
-
-    const params = new URLSearchParams({
-      listingSource: "all listings",
-      condition: JSON.stringify(condition),
-      uiConfig: "{}",
-      zoom: "13",
-      page: "1",
-    });
-
-    return `${LOFTY_BASE_URL}/listing?${params.toString()}`;
-  };
 
   const mutation = useMutation({
     mutationFn: async (data: Record<string, unknown>) => {
@@ -355,6 +355,13 @@ export const LeadModal = ({ open, onOpenChange, context = "general" }: LeadModal
     }
     setEmailError("");
 
+    loftyUrlRef.current = buildLoftyURL({
+      city: city || undefined,
+      maxPrice: budget ? parseBudgetToNumber(budget) : undefined,
+      beds: bedrooms ? bedrooms.replace("+", "") : undefined,
+    });
+    console.log("Lofty URL guardada:", loftyUrlRef.current);
+
     mutation.mutate({
       fullName,
       email,
@@ -369,8 +376,6 @@ export const LeadModal = ({ open, onOpenChange, context = "general" }: LeadModal
       message: message || null,
     });
   };
-
-  const loftyUrl = buildLoftyUrl();
 
   const reset = () => {
     setFullName("");
@@ -416,7 +421,7 @@ export const LeadModal = ({ open, onOpenChange, context = "general" }: LeadModal
 
         <div className="p-6 md:p-8">
           {showRedirectTransition ? (
-            <RedirectTransition city={city} loftyUrl={loftyUrl} />
+            <RedirectTransition city={city} loftyUrl={loftyUrlRef.current} />
           ) : submitted ? (
             <div className="text-center space-y-4 py-6">
               <div className="w-16 h-16 bg-[#D2B463]/20 rounded-full flex items-center justify-center mx-auto text-[#D2B463]">
