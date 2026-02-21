@@ -41,3 +41,8 @@ waitForPort = 5000
 
 [agent]
 mockupState = "FULLSTACK"
+
+[userenv]
+
+[userenv.shared]
+DATABASE_URL = "postgres://postgres:SolodeCristo28@db.gjxxjdfjfqvrywflnzmf.supabase.co:6543/postgres"
