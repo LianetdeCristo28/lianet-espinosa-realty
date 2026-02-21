@@ -1,6 +1,17 @@
-import { type User, type InsertUser, type Lead, type InsertLead, users, leads } from "@shared/schema";
-import { db } from "./db";
+import { drizzle } from "drizzle-orm/node-postgres";
+import pg from "pg";
 import { eq, desc } from "drizzle-orm";
+import { type User, type InsertUser, type Lead, type InsertLead, users, leads } from "@shared/schema";
+
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL no está configurado. Agrega la variable de entorno en Replit secrets.");
+}
+
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
+const db = drizzle(pool);
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -21,14 +32,14 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const [user] = await db.insert(users).values(insertUser).returning();
-    return user;
+  async createUser(user: InsertUser): Promise<User> {
+    const [created] = await db.insert(users).values(user).returning();
+    return created;
   }
 
   async insertLead(lead: InsertLead): Promise<Lead> {
-    const [newLead] = await db.insert(leads).values(lead).returning();
-    return newLead;
+    const [created] = await db.insert(leads).values(lead).returning();
+    return created;
   }
 
   async getLeads(): Promise<Lead[]> {
