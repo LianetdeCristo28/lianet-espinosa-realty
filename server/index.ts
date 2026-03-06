@@ -1,5 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";
+import rateLimit from "express-rate-limit";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
@@ -19,6 +20,36 @@ declare module "http" {
 
 const app = express();
 const httpServer = createServer(app);
+
+app.set("trust proxy", 1);
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: "Demasiadas solicitudes. Por favor espera unos minutos." },
+});
+
+const leadLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: "Demasiadas solicitudes. Por favor espera unos minutos." },
+});
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: "Demasiadas solicitudes. Por favor espera unos minutos." },
+});
+
+app.use("/api/", apiLimiter);
+
+export { leadLimiter, loginLimiter };
 
 app.use(
   express.json({

@@ -37,8 +37,13 @@ Preferred communication style: Simple, everyday language.
   - `GET /api/auth/me` — Check current session status
   - Session config: httpOnly, secure in production, sameSite strict, 2-hour maxAge
   - Admin user auto-created on first startup if not present
+- **Rate Limiting**: express-rate-limit with trust proxy
+  - Global: 100 requests per IP per 15 min on all `/api/` routes
+  - `POST /api/leads`: 5 requests per IP per 15 min
+  - `POST /api/auth/login`: 5 attempts per IP per 15 min
+  - Standard `RateLimit-*` headers in responses; Spanish error message on limit exceeded
 - **API Design**: REST API under `/api/` prefix
-  - `POST /api/leads` — Create a new lead (validated with Zod, public)
+  - `POST /api/leads` — Create a new lead (validated with Zod, public, rate-limited)
   - `GET /api/leads` — Retrieve all leads (protected by requireAuth middleware)
 - **Development**: Vite dev server is integrated as middleware (in `server/vite.ts`) for HMR during development
 - **Production**: Client is built to `dist/public/`, server is bundled with esbuild to `dist/index.cjs`

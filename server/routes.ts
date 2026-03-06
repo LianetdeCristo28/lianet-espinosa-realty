@@ -3,12 +3,13 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertLeadSchema } from "@shared/schema";
 import { requireAuth, verifyPassword } from "./auth";
+import { leadLimiter, loginLimiter } from "./index";
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  app.post("/api/auth/login", async (req, res) => {
+  app.post("/api/auth/login", loginLimiter, async (req, res) => {
     try {
       const { username, password } = req.body;
       if (!username || !password) {
@@ -52,7 +53,7 @@ export async function registerRoutes(
     return res.json({ authenticated: false });
   });
 
-  app.post("/api/leads", async (req, res) => {
+  app.post("/api/leads", leadLimiter, async (req, res) => {
     try {
       const validated = insertLeadSchema.parse(req.body);
       const lead = await storage.insertLead(validated);
