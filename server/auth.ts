@@ -23,14 +23,22 @@ export async function ensureAdminUser() {
   const adminUsername = process.env.ADMIN_USERNAME || "admin";
   const adminPassword = process.env.ADMIN_PASSWORD;
 
+  if (!adminPassword) {
+    console.warn("[Auth] ADMIN_PASSWORD no configurado. Configura ADMIN_PASSWORD en las variables de entorno.");
+    return;
+  }
+
   const existing = await storage.getUserByUsername(adminUsername);
   if (!existing) {
-    if (!adminPassword) {
-      console.warn("[Auth] ADMIN_PASSWORD no configurado. Configura ADMIN_PASSWORD en las variables de entorno para crear el usuario admin.");
-      return;
-    }
     const hashed = await hashPassword(adminPassword);
     await storage.createUser({ username: adminUsername, password: hashed });
     console.log("[Auth] Usuario admin creado exitosamente");
+  } else {
+    const matches = await verifyPassword(adminPassword, existing.password);
+    if (!matches) {
+      const hashed = await hashPassword(adminPassword);
+      await storage.updateUserPassword(existing.id, hashed);
+      console.log("[Auth] Contraseña de admin actualizada");
+    }
   }
 }
