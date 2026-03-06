@@ -327,16 +327,16 @@ export const LeadModal = ({ open, onOpenChange, context = "general", onLeadCaptu
 
               <div className="space-y-2">
                 <label className="text-sm font-medium text-[#17140F]">Nombre completo <span className="text-red-400">*</span></label>
-                <input data-testid="input-lead-name" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className={inputClass} placeholder="Tu nombre completo" required />
+                <input data-testid="input-lead-name" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className={inputClass} placeholder="Tu nombre completo" required maxLength={100} />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-[#17140F]">Correo electrónico <span className="text-red-400">*</span></label>
-                <input data-testid="input-lead-email" type="email" value={email} onChange={(e) => { setEmail(e.target.value); setEmailError(""); }} className={`${inputClass} ${emailError ? "border-red-400" : ""}`} placeholder="correo@ejemplo.com" required />
+                <input data-testid="input-lead-email" type="email" value={email} onChange={(e) => { setEmail(e.target.value); setEmailError(""); }} className={`${inputClass} ${emailError ? "border-red-400" : ""}`} placeholder="correo@ejemplo.com" required maxLength={254} />
                 {emailError && <p className="text-red-400 text-xs">{emailError}</p>}
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium text-[#17140F]">Teléfono <span className="text-[#BDB2A4] text-xs">(opcional)</span></label>
-                <input data-testid="input-lead-phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className={inputClass} placeholder="+1 (555) 000-0000" />
+                <input data-testid="input-lead-phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className={inputClass} placeholder="+1 (555) 000-0000" maxLength={20} />
               </div>
 
               {!isSearch && (
@@ -386,7 +386,7 @@ export const LeadModal = ({ open, onOpenChange, context = "general", onLeadCaptu
               {(profileType === "vendedor" || context === "vendedor") && (
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-[#17140F]">Dirección de la propiedad</label>
-                  <input type="text" value={propertyAddress} onChange={(e) => setPropertyAddress(e.target.value)} className={inputClass} placeholder="123 Main St, Miami, FL 33101" />
+                  <input type="text" value={propertyAddress} onChange={(e) => setPropertyAddress(e.target.value)} className={inputClass} placeholder="123 Main St, Miami, FL 33101" maxLength={200} />
                 </div>
               )}
 

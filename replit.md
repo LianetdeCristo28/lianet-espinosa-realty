@@ -65,7 +65,7 @@ Preferred communication style: Simple, everyday language.
 - **Schema** (in `shared/schema.ts`):
   - `users` table: `id` (UUID, auto-generated), `username` (unique), `password`
   - `leads` table: `id` (UUID), `name`, `phone`, `email`, `interest`, `source` (defaults to "contact_form"), `diagnosticStep` (optional integer), `createdAt`
-- **Validation**: Drizzle-Zod generates insert schemas; Zod schemas are shared between client and server
+- **Validation**: Drizzle-Zod generates insert schemas with extended Zod refinements (max lengths, regex patterns); sanitize-html strips all HTML tags server-side before validation
 - **Migrations**: Managed via `drizzle-kit push` (schema push approach, not migration files)
 
 ### Key Design Patterns

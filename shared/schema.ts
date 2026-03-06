@@ -33,10 +33,24 @@ export const leads = pgTable("leads", {
   createdAt: text("created_at").default(sql`now()`),
 });
 
-export const insertLeadSchema = createInsertSchema(leads).omit({
-  id: true,
-  createdAt: true,
-});
+export const insertLeadSchema = createInsertSchema(leads)
+  .omit({
+    id: true,
+    createdAt: true,
+  })
+  .extend({
+    fullName: z.string().min(1).max(100).regex(/^[\p{L}\p{M}\s'.,-]+$/u, "Nombre contiene caracteres no válidos"),
+    email: z.string().email("Formato de email inválido").max(254),
+    phone: z.string().max(20).regex(/^[0-9+\-()\s]*$/, "Teléfono contiene caracteres no válidos").nullish(),
+    city: z.string().max(100).nullish(),
+    budget: z.string().max(50).nullish(),
+    bedrooms: z.string().max(10).nullish(),
+    pool: z.string().max(10).nullish(),
+    profileType: z.string().max(50).nullish(),
+    propertyAddress: z.string().max(200).nullish(),
+    message: z.string().max(500).nullish(),
+    source: z.string().max(100).nullish(),
+  });
 
 export type InsertLead = z.infer<typeof insertLeadSchema>;
 export type Lead = typeof leads.$inferSelect;

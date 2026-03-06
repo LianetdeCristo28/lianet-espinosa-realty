@@ -170,15 +170,15 @@ export const DiagnosticModal = ({ open, onOpenChange }: DiagnosticModalProps) =>
                   <p className="text-sm text-[#17140F]/70 text-center">Déjanos tus datos para recibir orientación personalizada sobre tu <strong>{result?.title}</strong>.</p>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-[#17140F]">Nombre</label>
-                    <input data-testid="input-diagnostic-name" type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-white border border-[#BDB2A4]/20 rounded-lg p-3 outline-none focus:border-primary transition-all duration-300 shadow-sm" placeholder="Tu nombre" required />
+                    <input data-testid="input-diagnostic-name" type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full bg-white border border-[#BDB2A4]/20 rounded-lg p-3 outline-none focus:border-primary transition-all duration-300 shadow-sm" placeholder="Tu nombre" required maxLength={100} />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-[#17140F]">Teléfono</label>
-                    <input data-testid="input-diagnostic-phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full bg-white border border-[#BDB2A4]/20 rounded-lg p-3 outline-none focus:border-primary transition-all duration-300 shadow-sm" placeholder="+1 (555) 000-0000" required />
+                    <input data-testid="input-diagnostic-phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full bg-white border border-[#BDB2A4]/20 rounded-lg p-3 outline-none focus:border-primary transition-all duration-300 shadow-sm" placeholder="+1 (555) 000-0000" required maxLength={20} />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-[#17140F]">Correo electrónico</label>
-                    <input data-testid="input-diagnostic-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-white border border-[#BDB2A4]/20 rounded-lg p-3 outline-none focus:border-primary transition-all duration-300 shadow-sm" placeholder="correo@ejemplo.com" required />
+                    <input data-testid="input-diagnostic-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-white border border-[#BDB2A4]/20 rounded-lg p-3 outline-none focus:border-primary transition-all duration-300 shadow-sm" placeholder="correo@ejemplo.com" required maxLength={254} />
                   </div>
                   {mutation.isError && (
                     <p className="text-red-500 text-sm text-center">Hubo un error. Por favor intenta de nuevo.</p>

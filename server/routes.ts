@@ -1,9 +1,21 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import sanitizeHtml from "sanitize-html";
 import { storage } from "./storage";
 import { insertLeadSchema } from "@shared/schema";
 import { requireAuth, verifyPassword } from "./auth";
 import { leadLimiter, loginLimiter } from "./index";
+
+const sanitizeOptions: sanitizeHtml.IOptions = {
+  allowedTags: [],
+  allowedAttributes: {},
+};
+
+function sanitizeText(value: unknown): string | undefined | null {
+  if (value === null || value === undefined) return value;
+  if (typeof value !== "string") return value as any;
+  return sanitizeHtml(value.trim(), sanitizeOptions);
+}
 
 export async function registerRoutes(
   httpServer: Server,
@@ -55,7 +67,21 @@ export async function registerRoutes(
 
   app.post("/api/leads", leadLimiter, async (req, res) => {
     try {
-      const validated = insertLeadSchema.parse(req.body);
+      const sanitizedBody = {
+        ...req.body,
+        fullName: sanitizeText(req.body.fullName),
+        email: sanitizeText(req.body.email),
+        phone: sanitizeText(req.body.phone),
+        city: sanitizeText(req.body.city),
+        budget: sanitizeText(req.body.budget),
+        bedrooms: sanitizeText(req.body.bedrooms),
+        profileType: sanitizeText(req.body.profileType),
+        propertyAddress: sanitizeText(req.body.propertyAddress),
+        message: sanitizeText(req.body.message),
+        source: sanitizeText(req.body.source),
+      };
+
+      const validated = insertLeadSchema.parse(sanitizedBody);
       const lead = await storage.insertLead(validated);
       res.json({ success: true, lead });
     } catch (error) {
