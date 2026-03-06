@@ -42,8 +42,12 @@ Preferred communication style: Simple, everyday language.
   - `POST /api/leads`: 5 requests per IP per 15 min
   - `POST /api/auth/login`: 5 attempts per IP per 15 min
   - Standard `RateLimit-*` headers in responses; Spanish error message on limit exceeded
+- **CSRF Protection**: csrf-csrf (double-submit cookie pattern)
+  - `GET /api/csrf-token` — Returns a CSRF token; sets `__csrf` httpOnly cookie
+  - All POST/PUT/DELETE requests to `/api/` require `x-csrf-token` header matching cookie
+  - Frontend `apiRequest()` in `lib/queryClient.ts` auto-fetches and sends CSRF tokens
 - **API Design**: REST API under `/api/` prefix
-  - `POST /api/leads` — Create a new lead (validated with Zod, public, rate-limited)
+  - `POST /api/leads` — Create a new lead (validated with Zod, public, rate-limited, CSRF-protected)
   - `GET /api/leads` — Retrieve all leads (protected by requireAuth middleware)
 - **Development**: Vite dev server is integrated as middleware (in `server/vite.ts`) for HMR during development
 - **Production**: Client is built to `dist/public/`, server is bundled with esbuild to `dist/index.cjs`

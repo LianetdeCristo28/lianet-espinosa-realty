@@ -1,6 +1,8 @@
 import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";
 import rateLimit from "express-rate-limit";
+import cookieParser from "cookie-parser";
+import { doubleCsrf } from "csrf-csrf";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
@@ -60,6 +62,7 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.use(
   session({
@@ -74,6 +77,34 @@ app.use(
     },
   }),
 );
+
+const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
+  getSecret: () => process.env.SESSION_SECRET || "fallback-dev-secret-change-me",
+  getSessionIdentifier: (req) => req.ip || "anonymous",
+  cookieName: "__csrf",
+  cookieOptions: {
+    httpOnly: true,
+    sameSite: "strict" as const,
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+  },
+  getCsrfTokenFromRequest: (req) => req.headers["x-csrf-token"] as string,
+});
+
+app.get("/api/csrf-token", (req, res) => {
+  const token = generateCsrfToken(req, res);
+  return res.json({ token });
+});
+
+app.use((req, res, next) => {
+  if (req.method === "GET" || req.method === "HEAD" || req.method === "OPTIONS") {
+    return next();
+  }
+  if (req.path.startsWith("/api/")) {
+    return doubleCsrfProtection(req, res, next);
+  }
+  return next();
+});
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -123,7 +154,9 @@ app.use((req, res, next) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
-    console.error("Internal Server Error:", err);
+    if (err.code !== "EBADCSRFTOKEN") {
+      console.error("Internal Server Error:", err);
+    }
 
     if (res.headersSent) {
       return next(err);

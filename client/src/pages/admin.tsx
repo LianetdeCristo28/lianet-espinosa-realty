@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
+import { apiRequest } from "@/lib/queryClient";
+
+async function getCsrfToken(): Promise<string> {
+  const res = await fetch("/api/csrf-token", { credentials: "include" });
+  const data = await res.json();
+  return data.token;
+}
 
 interface Lead {
   id: string;
@@ -60,10 +67,12 @@ export default function AdminPage() {
     setLoginError("");
     setLoginLoading(true);
     try {
+      const token = await getCsrfToken();
       const res = await fetch("/api/auth/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-csrf-token": token },
         body: JSON.stringify({ username, password }),
+        credentials: "include",
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -81,7 +90,9 @@ export default function AdminPage() {
   }
 
   async function handleLogout() {
-    await fetch("/api/auth/logout", { method: "POST" });
+    try {
+      await apiRequest("POST", "/api/auth/logout");
+    } catch {}
     setAuthenticated(false);
     setLeads([]);
     setUsername("");
