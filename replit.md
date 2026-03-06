@@ -31,9 +31,15 @@ Preferred communication style: Simple, everyday language.
 ### Backend Architecture
 - **Runtime**: Node.js with Express 5
 - **Language**: TypeScript, executed via `tsx` in development
-- **API Design**: Simple REST API under `/api/` prefix
-  - `POST /api/leads` — Create a new lead (validated with Zod)
-  - `GET /api/leads` — Retrieve all leads (ordered by creation date, newest first)
+- **Authentication**: express-session with bcrypt password hashing
+  - `POST /api/auth/login` — Authenticate with username/password (bcrypt-verified)
+  - `POST /api/auth/logout` — Destroy session
+  - `GET /api/auth/me` — Check current session status
+  - Session config: httpOnly, secure in production, sameSite strict, 2-hour maxAge
+  - Admin user auto-created on first startup if not present
+- **API Design**: REST API under `/api/` prefix
+  - `POST /api/leads` — Create a new lead (validated with Zod, public)
+  - `GET /api/leads` — Retrieve all leads (protected by requireAuth middleware)
 - **Development**: Vite dev server is integrated as middleware (in `server/vite.ts`) for HMR during development
 - **Production**: Client is built to `dist/public/`, server is bundled with esbuild to `dist/index.cjs`
 
@@ -79,6 +85,9 @@ The landing page (`client/src/pages/landing.tsx`) is composed of these major sec
 |----------|----------|---------|---------|
 | `SUPABASE_DATABASE_URL` | Yes | Replit Secret | Supabase Connection Pooler URL (postgresql://...) |
 | `DATABASE_URL` | Fallback | Replit Secret | PostgreSQL connection string (used if SUPABASE_DATABASE_URL not set) |
+| `SESSION_SECRET` | Yes | Replit Secret | Secret key for express-session cookie signing |
+| `ADMIN_USERNAME` | No | Env var | Admin username (defaults to "admin") |
+| `ADMIN_PASSWORD` | Yes* | Replit Secret | Admin password for initial user creation (*only needed on first run) |
 | `N8N_WEBHOOK_URL` | No | Env var | n8n webhook endpoint for lead notifications |
 
 ### Key NPM Dependencies

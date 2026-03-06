@@ -2,35 +2,60 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertLeadSchema } from "@shared/schema";
-
-// === INTEGRACIÓN n8n ===
-// Webhook URL: process.env.N8N_WEBHOOK_URL
-// Se dispara al capturar un lead
-// Payload: { lead, source, timestamp }
-
-// === ANALYTICS ===
-// Google Analytics 4: process.env.GA4_MEASUREMENT_ID
-// Facebook Pixel: process.env.FB_PIXEL_ID
+import { requireAuth, verifyPassword } from "./auth";
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      if (!username || !password) {
+        return res.status(400).json({ message: "Usuario y contraseña requeridos" });
+      }
+
+      const user = await storage.getUserByUsername(username);
+      if (!user) {
+        return res.status(401).json({ message: "Credenciales inválidas" });
+      }
+
+      const valid = await verifyPassword(password, user.password);
+      if (!valid) {
+        return res.status(401).json({ message: "Credenciales inválidas" });
+      }
+
+      req.session.userId = user.id;
+      req.session.username = user.username;
+
+      return res.json({ success: true, username: user.username });
+    } catch (error) {
+      console.error("Error en login:", error);
+      return res.status(500).json({ message: "Error interno del servidor" });
+    }
+  });
+
+  app.post("/api/auth/logout", (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Error al cerrar sesión" });
+      }
+      res.clearCookie("connect.sid");
+      return res.json({ success: true });
+    });
+  });
+
+  app.get("/api/auth/me", (req, res) => {
+    if (req.session && req.session.userId) {
+      return res.json({ authenticated: true, username: req.session.username });
+    }
+    return res.json({ authenticated: false });
+  });
+
   app.post("/api/leads", async (req, res) => {
     try {
       const validated = insertLeadSchema.parse(req.body);
       const lead = await storage.insertLead(validated);
-
-      // === INTEGRACIÓN n8n ===
-      // Descomentar cuando N8N_WEBHOOK_URL esté configurado en secrets
-      // if (process.env.N8N_WEBHOOK_URL) {
-      //   await fetch(process.env.N8N_WEBHOOK_URL, {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json' },
-      //     body: JSON.stringify({ lead, source: lead.source, timestamp: new Date().toISOString() })
-      //   });
-      // }
-
       res.json({ success: true, lead });
     } catch (error) {
       console.error("Error creating lead:", error);
@@ -38,7 +63,7 @@ export async function registerRoutes(
     }
   });
 
-  app.get("/api/leads", async (_req, res) => {
+  app.get("/api/leads", requireAuth, async (_req, res) => {
     try {
       const leads = await storage.getLeads();
       return res.json(leads);
