@@ -11,7 +11,7 @@ const RealtorsIASection = lazy(() => import("@/components/RealtorsIASection").th
 const PropertySearchSection = lazy(() => import("@/components/PropertySearchSection").then(m => ({ default: m.PropertySearchSection })));
 const ChatbotAna = lazy(() => import("@/components/ChatbotAna").then(m => ({ default: m.ChatbotAna })));
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Check, Search, TrendingDown, Clock, Activity } from "lucide-react";
+import { ArrowDown, Check, Search, TrendingDown, Clock, Activity, Calculator, EyeOff, Shield, Handshake } from "lucide-react";
 import { motion } from "framer-motion";
 
 function AnimatedCounter({ target, duration = 2000 }: { target: number; duration?: number }) {
@@ -332,38 +332,68 @@ export default function LandingPage() {
           {/* Support / Acompañamiento */}
           <div className="py-24 bg-white relative">
             <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-              <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-                <img src="/assets/key-hand.png" alt="Mano entregando las llaves de una casa nueva" loading="lazy" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-black/20" />
-                <div className="absolute bottom-8 left-8 right-8 text-white">
-                  <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20">
-                    <p className="text-lg italic font-serif">"Al fin alguien me explica el camino completo. Ya no tengo que adivinar qué hacer."</p>
-                    <p className="mt-4 text-sm font-bold">— Mariana y Carlos, compraron en 2024</p>
+              <div className="space-y-6">
+                <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+                  <img src="/assets/key-hand.png" alt="Mano entregando las llaves de una casa nueva" loading="lazy" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-black/20" />
+                  <div className="absolute bottom-8 left-8 right-8 text-white">
+                    <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20">
+                      <p className="text-lg italic font-serif">"Al fin alguien me explica el camino completo. Ya no tengo que adivinar qué hacer."</p>
+                      <p className="mt-4 text-sm font-bold">— Mariana y Carlos, compraron en 2024</p>
+                    </div>
                   </div>
                 </div>
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                  className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-[#D2B463]/30 shadow-lg"
+                >
+                  <p className="text-lg italic font-serif text-[#17140F]">"Lianét nos ahorró $15,000 en la negociación. No sabíamos que eso era posible."</p>
+                  <p className="mt-4 text-sm font-bold text-[#17140F]/70">— Roberto D., cerró en Orlando 2025</p>
+                </motion.div>
               </div>
 
               <div className="space-y-8">
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="text-5xl font-bold text-primary"
+                  data-testid="text-volume-stat"
+                >
+                  $2.1M+
+                  <span className="block text-base font-medium text-muted-foreground mt-1">en propiedades cerradas este año</span>
+                </motion.p>
                 <h2 className="text-4xl font-serif font-bold text-[#17140F]">No tienes que caminar solo.</h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   Cada paso está pensado para darte claridad y seguridad. Nosotros nos encargamos de traducir el idioma bancario, negociar los precios y revisar las letras pequeñas.
                 </p>
 
-                <ul className="space-y-4">
+                <div className="space-y-3">
                   {[
-                    "Asesoría financiera real, no solo 'ventas'.",
-                    "Acceso a propiedades que no están en portales públicos.",
-                    "Negociación agresiva a tu favor.",
-                    "Acompañamiento hasta la firma (y después)."
+                    { text: "Asesoría financiera real, no solo 'ventas'.", icon: Calculator },
+                    { text: "Acceso a propiedades que no están en portales públicos.", icon: EyeOff },
+                    { text: "Negociación agresiva a tu favor.", icon: Shield },
+                    { text: "Acompañamiento hasta la firma (y después).", icon: Handshake },
                   ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-lg text-[#17140F]">
-                      <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary shrink-0">
-                        <Check className="w-4 h-4" />
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.15 }}
+                      className="flex items-center gap-4 p-4 rounded-xl bg-[#F8F6F2] hover:shadow-md transition-shadow duration-300"
+                      data-testid={`card-benefit-${i}`}
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                        <item.icon className="w-5 h-5" />
                       </div>
-                      {item}
-                    </li>
+                      <p className="text-[#17140F] font-medium">{item.text}</p>
+                    </motion.div>
                   ))}
-                </ul>
+                </div>
               </div>
             </div>
           </div>
