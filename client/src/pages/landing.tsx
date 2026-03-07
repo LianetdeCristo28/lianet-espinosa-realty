@@ -343,16 +343,7 @@ export default function LandingPage() {
                     </div>
                   </div>
                 </div>
-                <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                  className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-[#D2B463]/30 shadow-lg"
-                >
-                  <p className="text-lg italic font-serif text-[#17140F]">"Lianét nos ahorró $15,000 en la negociación. No sabíamos que eso era posible."</p>
-                  <p className="mt-4 text-sm font-bold text-[#17140F]/70">— Roberto D., cerró en Orlando 2025</p>
-                </motion.div>
+
               </div>
 
               <div className="space-y-8">
