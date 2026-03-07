@@ -3,25 +3,19 @@ import pg from "pg";
 import { parse as parseConnectionString } from "pg-connection-string";
 import { eq, desc, and, gte } from "drizzle-orm";
 import { type User, type InsertUser, type Lead, type InsertLead, users, leads } from "@shared/schema";
-
-const supabaseUrl = process.env.SUPABASE_DATABASE_URL;
-const fallbackUrl = process.env.DATABASE_URL;
-
-if (!supabaseUrl && !fallbackUrl) {
-  throw new Error("No se encontró una URL de conexión a la base de datos. Configura SUPABASE_DATABASE_URL en las variables de entorno.");
-}
+import { config } from "./config";
 
 let pool: pg.Pool;
 
-if (supabaseUrl) {
-  const config = parseConnectionString(supabaseUrl);
-  console.log(`[DB] Conectando a Supabase: ${config.host}:${config.port}`);
+if (config.isSupabase) {
+  const parsed = parseConnectionString(config.databaseUrl);
+  console.log(`[DB] Conectando a Supabase: ${parsed.host}:${parsed.port}`);
   pool = new pg.Pool({
-    host: config.host ?? undefined,
-    port: config.port ? parseInt(String(config.port), 10) : undefined,
-    user: config.user ?? undefined,
-    password: config.password ?? undefined,
-    database: config.database ?? undefined,
+    host: parsed.host ?? undefined,
+    port: parsed.port ? parseInt(String(parsed.port), 10) : undefined,
+    user: parsed.user ?? undefined,
+    password: parsed.password ?? undefined,
+    database: parsed.database ?? undefined,
     ssl: { rejectUnauthorized: false },
     max: 10,
     idleTimeoutMillis: 30000,
@@ -29,7 +23,7 @@ if (supabaseUrl) {
   });
 } else {
   pool = new pg.Pool({
-    connectionString: fallbackUrl,
+    connectionString: config.databaseUrl,
     max: 10,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 5000,

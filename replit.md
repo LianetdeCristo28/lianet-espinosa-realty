@@ -102,6 +102,9 @@ The landing page (`client/src/pages/landing.tsx`) is composed of these major sec
 - **n8n Webhook** — Optional. If `N8N_WEBHOOK_URL` environment variable is set, new leads are POSTed to this URL for automation workflows (e.g., email notifications, CRM sync). Failure is non-blocking (logged but doesn't affect lead creation).
 
 ### Environment Variables
+All env vars are centralized in `server/config.ts`. No `process.env` calls exist outside this file.
+A `.env.example` template documents every variable.
+
 | Variable | Required | Storage | Purpose |
 |----------|----------|---------|---------|
 | `SUPABASE_DATABASE_URL` | Yes | Replit Secret | Supabase Connection Pooler URL (postgresql://...) |
@@ -110,6 +113,8 @@ The landing page (`client/src/pages/landing.tsx`) is composed of these major sec
 | `ADMIN_USERNAME` | No | Env var | Admin username (defaults to "admin") |
 | `ADMIN_PASSWORD` | Yes* | Replit Secret | Admin password for initial user creation (*only needed on first run) |
 | `N8N_WEBHOOK_URL` | No | Env var | n8n webhook endpoint for lead notifications |
+| `GA4_MEASUREMENT_ID` | No | Env var | Google Analytics 4 measurement ID |
+| `FB_PIXEL_ID` | No | Env var | Facebook Pixel ID |
 
 ### Key NPM Dependencies
 - **Frontend**: React, Wouter, TanStack React Query, Framer Motion, shadcn/ui (Radix UI), Tailwind CSS v4

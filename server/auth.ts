@@ -1,6 +1,7 @@
 import { type Request, type Response, type NextFunction } from "express";
 import bcrypt from "bcrypt";
 import { storage } from "./storage";
+import { config } from "./config";
 
 const SALT_ROUNDS = 12;
 
@@ -20,8 +21,8 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
 }
 
 export async function ensureAdminUser() {
-  const adminUsername = process.env.ADMIN_USERNAME || "admin";
-  const adminPassword = process.env.ADMIN_PASSWORD;
+  const adminUsername = config.adminUsername;
+  const adminPassword = config.adminPassword;
 
   if (!adminPassword) {
     console.warn("[Auth] ADMIN_PASSWORD no configurado. Configura ADMIN_PASSWORD en las variables de entorno.");

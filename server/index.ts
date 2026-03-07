@@ -7,6 +7,7 @@ import { doubleCsrf } from "csrf-csrf";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
+import { config } from "./config";
 
 declare module "express-session" {
   interface SessionData {
@@ -26,7 +27,7 @@ const httpServer = createServer(app);
 
 app.set("trust proxy", 1);
 
-const isDev = process.env.NODE_ENV !== "production";
+const isDev = config.isDev;
 
 const cspDirectives: Record<string, string[]> = {
   "default-src": ["'self'"],
@@ -108,12 +109,12 @@ app.use(cookieParser());
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "fallback-dev-secret-change-me",
+    secret: config.sessionSecret,
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: config.isProduction,
       sameSite: "strict",
       maxAge: 2 * 60 * 60 * 1000,
     },
@@ -121,13 +122,13 @@ app.use(
 );
 
 const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
-  getSecret: () => process.env.SESSION_SECRET || "fallback-dev-secret-change-me",
+  getSecret: () => config.sessionSecret,
   getSessionIdentifier: (req) => req.ip || "anonymous",
   cookieName: "__csrf",
   cookieOptions: {
     httpOnly: true,
     sameSite: "strict" as const,
-    secure: process.env.NODE_ENV === "production",
+    secure: config.isProduction,
     path: "/",
   },
   getCsrfTokenFromRequest: (req) => req.headers["x-csrf-token"] as string,
@@ -162,7 +163,7 @@ export function log(message: string, source = "express") {
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
-  const isProduction = process.env.NODE_ENV === "production";
+  const isProduction = config.isProduction;
 
   res.on("finish", () => {
     if (!path.startsWith("/api")) return;
@@ -204,7 +205,7 @@ app.use((req, res, next) => {
       return next(err);
     }
 
-    if (process.env.NODE_ENV === "production") {
+    if (config.isProduction) {
       return res.status(status).json({
         message: status === 400 ? "Datos inválidos" : "Error interno del servidor",
       });
@@ -213,21 +214,14 @@ app.use((req, res, next) => {
     return res.status(status).json({ message: err.message });
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (process.env.NODE_ENV === "production") {
+  if (config.isProduction) {
     serveStatic(app);
   } else {
     const { setupVite } = await import("./vite");
     await setupVite(httpServer, app);
   }
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 5000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || "5000", 10);
+  const port = config.port;
   httpServer.listen(
     {
       port,
