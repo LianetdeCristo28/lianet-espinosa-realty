@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import { doubleCsrf } from "csrf-csrf";
 import { registerRoutes } from "./routes";
@@ -28,6 +29,32 @@ const httpServer = createServer(app);
 app.set("trust proxy", 1);
 
 const isDev = config.isDev;
+
+const productionOrigins = [
+  "https://caminoatupropiedad.com",
+  "https://www.caminoatupropiedad.com",
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (isDev) return callback(null, true);
+      if (
+        productionOrigins.includes(origin) ||
+        origin.endsWith(".replit.app") ||
+        origin.endsWith(".replit.dev") ||
+        origin.endsWith(".repl.co")
+      ) {
+        return callback(null, true);
+      }
+      callback(new Error("No permitido por CORS"));
+    },
+    credentials: true,
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "x-csrf-token"],
+  }),
+);
 
 const cspDirectives: Record<string, string[]> = {
   "default-src": ["'self'"],
