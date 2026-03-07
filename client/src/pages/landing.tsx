@@ -456,7 +456,7 @@ export default function LandingPage() {
 
       </main>
 
-      <Footer />
+      <Footer onOpenLeadModal={() => openLeadModal("general")} />
 
       {/* Modales */}
       <DiagnosticModal open={diagnosticOpen} onOpenChange={setDiagnosticOpen} />

@@ -24,9 +24,13 @@ const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string
   }
 };
 
-export const Footer = () => {
+interface FooterProps {
+  onOpenLeadModal?: () => void;
+}
+
+export const Footer = ({ onOpenLeadModal }: FooterProps) => {
   return (
-    <footer id="footer" className="bg-[#17140F] text-[#F8F6F2]">
+    <footer id="footer" className="bg-gradient-to-b from-[#17140F] to-[#0D0B08] text-[#F8F6F2]">
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
@@ -97,11 +101,26 @@ export const Footer = () => {
               </li>
               <li>Licensed Real Estate Agent</li>
             </ul>
+            {onOpenLeadModal && (
+              <button
+                onClick={onOpenLeadModal}
+                data-testid="link-footer-cta"
+                className="mt-5 text-[#D2B463] hover:text-[#D2B463]/80 font-medium text-sm transition-colors"
+              >
+                ¿Tienes preguntas? Escríbenos →
+              </button>
+            )}
           </div>
 
         </div>
 
-        <div className="border-t border-white/10 pt-6 mt-8 text-center space-y-2">
+        <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 mt-10 mb-6 text-white/30 text-xs">
+          <span>eXp Realty LLC</span>
+          <span>Stellar MLS</span>
+          <span>Florida Association of Realtors</span>
+        </div>
+
+        <div className="border-t border-white/10 pt-6 text-center space-y-2">
           <p className="text-xs opacity-40">
             © 2026 Lianet Espinosa Ojeda | Licensed Real Estate Agent | eXp Realty LLC
           </p>
@@ -111,7 +130,7 @@ export const Footer = () => {
           <a
             href="/privacidad"
             data-testid="link-footer-privacy"
-            className="inline-block text-xs text-[#D2B463]/60 hover:text-[#D2B463] transition-colors"
+            className="inline-block text-xs text-[#D2B463]/60 underline hover:text-[#D2B463] transition-colors"
           >
             Política de Privacidad
           </a>
