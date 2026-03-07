@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { promises as dns } from "dns";
 import sanitizeHtml from "sanitize-html";
-import { storage } from "./storage";
+import { storage, pool } from "./storage";
 import { insertLeadSchema } from "@shared/schema";
 import { requireAuth, verifyPassword } from "./auth";
 import { leadLimiter, loginLimiter } from "./index";
@@ -67,6 +67,15 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  app.get("/api/health", async (_req, res) => {
+    try {
+      await pool.query("SELECT 1");
+      return res.json({ status: "ok", db: "connected" });
+    } catch {
+      return res.status(503).json({ status: "degraded", db: "disconnected" });
+    }
+  });
+
   app.post("/api/auth/login", loginLimiter, async (req, res) => {
     try {
       const { username, password } = req.body;
