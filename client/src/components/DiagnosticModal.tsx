@@ -53,6 +53,7 @@ export const DiagnosticModal = ({ open, onOpenChange }: DiagnosticModalProps) =>
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
 
   const handleAnswer = (value: string) => {
     setAnswers({ ...answers, [questions[step].id]: value });
@@ -93,6 +94,7 @@ export const DiagnosticModal = ({ open, onOpenChange }: DiagnosticModalProps) =>
       source: "diagnostic",
       profileType: "comprador",
       message: `Diagnóstico: ${result.title} (Paso ${result.step})`,
+      consentedAt: new Date().toISOString(),
     });
   };
 
@@ -105,6 +107,7 @@ export const DiagnosticModal = ({ open, onOpenChange }: DiagnosticModalProps) =>
     setName("");
     setPhone("");
     setEmail("");
+    setAcceptedPrivacy(false);
     mutation.reset();
   };
 
@@ -180,10 +183,26 @@ export const DiagnosticModal = ({ open, onOpenChange }: DiagnosticModalProps) =>
                     <label className="text-sm font-medium text-[#17140F]">Correo electrónico</label>
                     <input data-testid="input-diagnostic-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-white border border-[#BDB2A4]/20 rounded-lg p-3 outline-none focus:border-primary transition-all duration-300 shadow-sm" placeholder="correo@ejemplo.com" required maxLength={254} />
                   </div>
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      data-testid="checkbox-diagnostic-privacy"
+                      type="checkbox"
+                      checked={acceptedPrivacy}
+                      onChange={(e) => setAcceptedPrivacy(e.target.checked)}
+                      className="mt-1 w-4 h-4 rounded border-[#BDB2A4]/40 text-[#D2B463] focus:ring-[#D2B463] accent-[#D2B463] cursor-pointer"
+                    />
+                    <span className="text-xs text-[#17140F]/60 leading-relaxed">
+                      He leído y acepto la{" "}
+                      <a href="/privacidad" target="_blank" rel="noopener noreferrer" className="text-[#D2B463] underline hover:text-[#D2B463]/80">
+                        política de privacidad
+                      </a>
+                      . Autorizo el uso de mis datos para fines de contacto inmobiliario.
+                    </span>
+                  </label>
                   {mutation.isError && (
                     <p className="text-red-500 text-sm text-center">Hubo un error. Por favor intenta de nuevo.</p>
                   )}
-                  <Button data-testid="button-diagnostic-submit" type="submit" disabled={mutation.isPending} className="w-full bg-primary hover:bg-primary/90 text-[#17140F] font-bold py-5 rounded-full text-lg shadow-sm transition-all duration-300">
+                  <Button data-testid="button-diagnostic-submit" type="submit" disabled={mutation.isPending || !acceptedPrivacy} className="w-full bg-primary hover:bg-primary/90 text-[#17140F] font-bold py-5 rounded-full text-lg shadow-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
                     {mutation.isPending ? <><Loader2 className="w-5 h-5 animate-spin mr-2" /> Enviando...</> : "Recibir mi plan"}
                   </Button>
                 </form>

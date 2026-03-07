@@ -134,7 +134,12 @@ export async function registerRoutes(
         propertyAddress: sanitizeText(req.body.propertyAddress),
         message: sanitizeText(req.body.message),
         source: sanitizeText(req.body.source),
+        consentedAt: req.body.consentedAt,
       };
+
+      if (!sanitizedBody.consentedAt) {
+        return res.status(400).json({ message: "Debes aceptar la política de privacidad para continuar." });
+      }
 
       const validated = insertLeadSchema.parse(sanitizedBody);
 
@@ -184,6 +189,7 @@ export async function registerRoutes(
         "Dirección Propiedad",
         "Mensaje",
         "Fuente",
+        "Consentimiento",
         "Fecha de Creación",
       ];
 
@@ -210,6 +216,7 @@ export async function registerRoutes(
           lead.propertyAddress,
           lead.message,
           lead.source,
+          lead.consentedAt,
           lead.createdAt,
         ]
           .map(escapeField)

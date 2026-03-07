@@ -30,6 +30,7 @@ export const leads = pgTable("leads", {
   propertyAddress: text("property_address"),
   message: text("message"),
   source: text("source"),
+  consentedAt: text("consented_at"),
   createdAt: text("created_at").default(sql`now()`),
 });
 
@@ -50,6 +51,7 @@ export const insertLeadSchema = createInsertSchema(leads)
     propertyAddress: z.string().max(200).nullish(),
     message: z.string().max(500).nullish(),
     source: z.string().max(100).nullish(),
+    consentedAt: z.string().nullish(),
   });
 
 export type InsertLead = z.infer<typeof insertLeadSchema>;

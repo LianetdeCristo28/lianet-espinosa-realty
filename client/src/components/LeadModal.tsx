@@ -212,6 +212,7 @@ export const LeadModal = ({ open, onOpenChange, context = "general", onLeadCaptu
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [emailError, setEmailError] = useState("");
+  const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [showRedirectTransition, setShowRedirectTransition] = useState(false);
   const loftyUrlRef = useRef<string>(`${LOFTY_BASE}/listing`);
 
@@ -274,13 +275,14 @@ export const LeadModal = ({ open, onOpenChange, context = "general", onLeadCaptu
       message: context === "busqueda"
         ? `Búsqueda IDX: ${finalFilters.city || "Florida"}, Max $${finalFilters.maxPrice ? Number(finalFilters.maxPrice).toLocaleString() : "Sin límite"}, ${finalFilters.beds || "Cualquier"}+ hab`
         : message || null,
+      consentedAt: new Date().toISOString(),
     });
   };
 
   const reset = () => {
     setFullName(""); setEmail(""); setPhone(""); setCity(""); setBudget(""); setBedrooms("");
     setPool(false); setProfileType(contextToProfile[context] || ""); setPropertyAddress("");
-    setMessage(""); setSubmitted(false); setEmailError(""); setShowRedirectTransition(false);
+    setMessage(""); setSubmitted(false); setEmailError(""); setAcceptedPrivacy(false); setShowRedirectTransition(false);
     loftyUrlRef.current = `${LOFTY_BASE}/listing`;
     mutation.reset();
   };
@@ -397,9 +399,26 @@ export const LeadModal = ({ open, onOpenChange, context = "general", onLeadCaptu
                 </div>
               )}
 
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <input
+                  data-testid="checkbox-lead-privacy"
+                  type="checkbox"
+                  checked={acceptedPrivacy}
+                  onChange={(e) => setAcceptedPrivacy(e.target.checked)}
+                  className="mt-1 w-4 h-4 rounded border-[#BDB2A4]/40 text-[#D2B463] focus:ring-[#D2B463] accent-[#D2B463] cursor-pointer"
+                />
+                <span className="text-xs text-[#17140F]/60 leading-relaxed">
+                  He leído y acepto la{" "}
+                  <a href="/privacidad" target="_blank" rel="noopener noreferrer" className="text-[#D2B463] underline hover:text-[#D2B463]/80">
+                    política de privacidad
+                  </a>
+                  . Autorizo el uso de mis datos para fines de contacto inmobiliario.
+                </span>
+              </label>
+
               {mutation.isError && <p className="text-red-500 text-sm text-center">Hubo un error. Intenta de nuevo.</p>}
 
-              <Button type="submit" disabled={mutation.isPending} className="w-full bg-[#D2B463] hover:bg-[#D2B463]/90 text-[#17140F] font-bold py-6 rounded-full text-lg shadow-lg shadow-[#D2B463]/20">
+              <Button type="submit" disabled={mutation.isPending || !acceptedPrivacy} className="w-full bg-[#D2B463] hover:bg-[#D2B463]/90 text-[#17140F] font-bold py-6 rounded-full text-lg shadow-lg shadow-[#D2B463]/20 disabled:opacity-50 disabled:cursor-not-allowed">
                 {mutation.isPending ? <><Loader2 className="w-5 h-5 animate-spin mr-2" /> Enviando...</> : isSearch ? "Ver Propiedades" : "Enviar y Continuar"}
               </Button>
               {isSearch && <p className="text-center text-xs text-muted-foreground">Al continuar, accederás a los listados del portal</p>}

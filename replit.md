@@ -65,7 +65,7 @@ Preferred communication style: Simple, everyday language.
 - **URL parsing**: Uses `pg-connection-string` to parse the URL, then passes individual params to `pg.Pool` with `ssl: { rejectUnauthorized: false }` (required for Supabase pooler compatibility)
 - **Schema** (in `shared/schema.ts`):
   - `users` table: `id` (UUID, auto-generated), `username` (unique), `password`
-  - `leads` table: `id` (UUID), `name`, `phone`, `email`, `interest`, `source` (defaults to "contact_form"), `diagnosticStep` (optional integer), `createdAt`
+  - `leads` table: `id` (UUID), `fullName`, `email`, `phone`, `city`, `budget`, `bedrooms`, `pool`, `profileType`, `propertyAddress`, `message`, `source`, `consentedAt` (ISO timestamp of privacy consent), `createdAt`
 - **Validation**: Drizzle-Zod generates insert schemas with extended Zod refinements (max lengths, regex patterns); sanitize-html strips all HTML tags server-side before validation
 - **Migrations**: Managed via `drizzle-kit push` (schema push approach, not migration files)
 

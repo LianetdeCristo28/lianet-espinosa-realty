@@ -101,13 +101,20 @@ export const Footer = () => {
 
         </div>
 
-        <div className="border-t border-white/10 pt-6 mt-8 text-center space-y-1">
+        <div className="border-t border-white/10 pt-6 mt-8 text-center space-y-2">
           <p className="text-xs opacity-40">
             © 2026 Lianet Espinosa Ojeda | Licensed Real Estate Agent | eXp Realty LLC
           </p>
           <p className="text-xs opacity-40">
             Este sitio es de carácter informativo. No constituye asesoría legal ni financiera.
           </p>
+          <a
+            href="/privacidad"
+            data-testid="link-footer-privacy"
+            className="inline-block text-xs text-[#D2B463]/60 hover:text-[#D2B463] transition-colors"
+          >
+            Política de Privacidad
+          </a>
         </div>
       </div>
     </footer>
