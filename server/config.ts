@@ -46,6 +46,9 @@ export const config = {
 
   sessionSecret,
 
+  adminUsername: optional("ADMIN_USERNAME", "admin")!,
+  adminPassword: optional("ADMIN_PASSWORD"),
+
   n8nWebhookUrl: optional("N8N_WEBHOOK_URL"),
 
   ga4MeasurementId: optional("GA4_MEASUREMENT_ID"),
