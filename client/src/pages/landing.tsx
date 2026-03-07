@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, lazy, Suspense } from "react";
+import React, { useState, useRef, lazy, Suspense } from "react";
 import { Staircase } from "@/components/Staircase";
 import { DiagnosticModal } from "@/components/DiagnosticModal";
 import { LeadModal } from "@/components/LeadModal";
@@ -11,27 +11,8 @@ const RealtorsIASection = lazy(() => import("@/components/RealtorsIASection").th
 const PropertySearchSection = lazy(() => import("@/components/PropertySearchSection").then(m => ({ default: m.PropertySearchSection })));
 const ChatbotAna = lazy(() => import("@/components/ChatbotAna").then(m => ({ default: m.ChatbotAna })));
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Check, Search, TrendingDown, Clock, Activity, Calculator, EyeOff, Shield, Handshake } from "lucide-react";
+import { ArrowDown, Check, Search, Activity, Calculator, EyeOff, Shield, Handshake, Database, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
-
-function AnimatedCounter({ target, duration = 2000 }: { target: number; duration?: number }) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    let start = 0;
-    const increment = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-    return () => clearInterval(timer);
-  }, [target, duration]);
-  return <>{count.toLocaleString()}</>;
-}
 
 const LOFTY_BASE_URL = "https://lianetespinosaojeda.expportal.com/listing";
 
@@ -105,7 +86,7 @@ export default function LandingPage() {
             >
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E5E1D8] text-[#17140F] text-sm font-medium tracking-wide">
                 <Activity className="w-3.5 h-3.5 text-primary" />
-                Conectado a Stellar MLS · Datos en tiempo real
+                Stellar MLS · eXp Realty
               </div>
 
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-[#17140F] leading-[1.1] text-balance">
@@ -157,7 +138,7 @@ export default function LandingPage() {
                     </div>
                   ))}
                 </div>
-                <p>+120 familias encontraron su hogar este año</p>
+                <p>Acompañamiento personalizado en cada paso</p>
               </div>
             </motion.div>
 
@@ -173,26 +154,23 @@ export default function LandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
                   className="bg-white/70 backdrop-blur-xl border border-white/30 rounded-2xl shadow-2xl p-7"
-                  data-testid="card-floating-stats"
+                  data-testid="card-mls-connection"
                 >
-                  <div className="space-y-4">
-                    <div>
-                      <p className="text-4xl font-serif font-bold text-[#17140F]">
-                        <AnimatedCounter target={1247} />
-                      </p>
-                      <p className="text-sm text-muted-foreground mt-1">propiedades activas en Florida</p>
+                  <div className="space-y-5">
+                    <div className="flex items-center gap-3">
+                      <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <Database className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-bold text-[#17140F] text-lg">Conectado a Stellar MLS</p>
+                      </div>
                     </div>
                     <div className="h-px bg-[#BDB2A4]/20" />
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-xs text-muted-foreground uppercase tracking-wider">Precio promedio</p>
-                        <p className="text-lg font-bold text-[#17140F]">$385,000</p>
-                      </div>
-                      <div className="flex items-center gap-1.5 text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full text-xs font-medium">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                        Actualizado hace 2 min
-                      </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <p className="text-sm font-medium text-emerald-700">Datos en tiempo real</p>
                     </div>
+                    <p className="text-sm text-muted-foreground">Búsqueda inteligente en todo Florida</p>
                   </div>
                 </motion.div>
 
@@ -201,15 +179,14 @@ export default function LandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.8 }}
                   className="absolute -bottom-12 -left-8 bg-white/80 backdrop-blur-lg border border-white/30 rounded-xl shadow-2xl p-4 -rotate-2 w-56"
-                  data-testid="card-savings"
+                  data-testid="card-coverage"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
-                      <TrendingDown className="w-4 h-4 text-emerald-600" />
+                    <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <MapPin className="w-4 h-4 text-primary" />
                     </div>
                     <div>
-                      <p className="text-xs text-muted-foreground">Ahorro promedio negociado</p>
-                      <p className="text-sm font-bold text-[#17140F]">$12,400</p>
+                      <p className="text-sm font-bold text-[#17140F]">Cobertura en toda Florida</p>
                     </div>
                   </div>
                 </motion.div>
@@ -219,15 +196,14 @@ export default function LandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 1.0 }}
                   className="absolute -bottom-8 -right-6 bg-white/80 backdrop-blur-lg border border-white/30 rounded-xl shadow-2xl p-4 rotate-3 w-56"
-                  data-testid="card-closing-time"
+                  data-testid="card-licensed"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
-                      <Clock className="w-4 h-4 text-amber-600" />
+                      <Shield className="w-4 h-4 text-amber-600" />
                     </div>
                     <div>
-                      <p className="text-xs text-muted-foreground">Tiempo promedio de cierre</p>
-                      <p className="text-sm font-bold text-[#17140F]">32 días</p>
+                      <p className="text-sm font-bold text-[#17140F]">Licensed Real Estate Agent</p>
                     </div>
                   </div>
                 </motion.div>
