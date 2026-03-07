@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, ArrowUpRight } from "lucide-react";
+import { Search, ArrowUpRight, MapPin, DollarSign, BedDouble } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LeadModal } from "@/components/LeadModal";
 import { trackEvent } from "@/lib/analytics";
@@ -15,6 +15,7 @@ const prices = [
   { label: "$1M+", value: "1000000" },
 ];
 const bedrooms = ["1", "2", "3", "4", "5+"];
+const popularCities = ["Miami", "Orlando", "Tampa", "Kissimmee", "Fort Lauderdale"];
 
 export const PropertySearchSection = () => {
   const [city, setCity] = useState("");
@@ -27,7 +28,7 @@ export const PropertySearchSection = () => {
     setLeadOpen(true);
   };
 
-  const selectClass = "bg-white border border-[#BDB2A4]/20 rounded-lg p-4 outline-none focus:border-primary transition-all duration-300 text-[#17140F] text-sm w-full appearance-none cursor-pointer";
+  const selectClass = "bg-[#F8F6F2] border border-[#BDB2A4]/20 rounded-lg p-4 pl-11 outline-none focus:border-b-2 focus:border-b-primary transition-all duration-300 text-[#17140F] text-sm w-full appearance-none cursor-pointer";
 
   return (
     <section id="buscar" className="py-24 bg-[#F8F6F2]">
@@ -56,59 +57,88 @@ export const PropertySearchSection = () => {
           <div className="grid md:grid-cols-3 gap-4 mb-6">
             <div className="space-y-2">
               <label className="text-sm font-medium text-[#17140F]">Ciudad</label>
-              <select
-                data-testid="select-search-city"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                className={selectClass}
-              >
-                <option value="">Seleccionar ciudad</option>
-                {cities.map((c) => (
-                  <option key={c} value={c}>{c}</option>
-                ))}
-              </select>
+              <div className="relative">
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#BDB2A4] pointer-events-none" />
+                <select
+                  data-testid="select-search-city"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  className={selectClass}
+                >
+                  <option value="">Seleccionar ciudad</option>
+                  {cities.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium text-[#17140F]">Precio máximo</label>
-              <select
-                data-testid="select-search-price"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value)}
-                className={selectClass}
-              >
-                <option value="">Seleccionar precio</option>
-                {prices.map((p) => (
-                  <option key={p.value} value={p.value}>{p.label}</option>
-                ))}
-              </select>
+              <div className="relative">
+                <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#BDB2A4] pointer-events-none" />
+                <select
+                  data-testid="select-search-price"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                  className={selectClass}
+                >
+                  <option value="">Seleccionar precio</option>
+                  {prices.map((p) => (
+                    <option key={p.value} value={p.value}>{p.label}</option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium text-[#17140F]">Habitaciones</label>
-              <select
-                data-testid="select-search-beds"
-                value={beds}
-                onChange={(e) => setBeds(e.target.value)}
-                className={selectClass}
-              >
-                <option value="">Seleccionar</option>
-                {bedrooms.map((b) => (
-                  <option key={b} value={b}>{b}</option>
-                ))}
-              </select>
+              <div className="relative">
+                <BedDouble className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#BDB2A4] pointer-events-none" />
+                <select
+                  data-testid="select-search-beds"
+                  value={beds}
+                  onChange={(e) => setBeds(e.target.value)}
+                  className={selectClass}
+                >
+                  <option value="">Seleccionar</option>
+                  {bedrooms.map((b) => (
+                    <option key={b} value={b}>{b}</option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
 
-          <Button
+          <button
             data-testid="button-buscar-propiedades"
             onClick={handleSearch}
-            className="w-full bg-[#D2B463] text-[#17140F] hover:bg-[#D2B463]/90 text-lg py-6 rounded-full font-bold shadow-lg hover:scale-[1.02] transition-all"
+            className="relative w-full bg-[#D2B463] text-[#17140F] hover:bg-[#D2B463]/90 text-lg py-4 rounded-full font-bold shadow-lg hover:scale-[1.02] transition-all overflow-hidden flex items-center justify-center gap-2"
           >
-            <Search className="w-5 h-5 mr-2" />
-            Buscar Propiedades Activas
-          </Button>
+            <span className="absolute inset-0 shimmer-effect" />
+            <Search className="w-5 h-5 relative z-10" />
+            <span className="relative z-10">Buscar Propiedades Activas</span>
+          </button>
+
+          <div className="flex flex-wrap items-center gap-2 mt-5">
+            <span className="text-xs text-muted-foreground mr-1">Populares:</span>
+            {popularCities.map((c) => (
+              <button
+                key={c}
+                onClick={() => setCity(c)}
+                data-testid={`chip-city-${c.toLowerCase().replace(/\s+/g, "-")}`}
+                className={`px-3 py-1 rounded-full text-sm cursor-pointer transition-colors ${city === c ? "bg-primary text-[#17140F] font-medium" : "bg-[#E5E1D8] text-[#17140F] hover:bg-primary hover:text-[#17140F]"}`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
         </motion.div>
 
-        <div className="text-center mt-6 space-y-2">
+        <div className="flex flex-col items-center mt-6 gap-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+            <span className="text-green-600 text-xs font-bold">EN VIVO</span>
+            <span className="text-muted-foreground text-xs">· Stellar MLS · Datos actualizados</span>
+          </div>
           <a
             href="https://lianetespinosaojeda.expportal.com/listing"
             target="_blank"
@@ -118,9 +148,6 @@ export const PropertySearchSection = () => {
             O explora todas las propiedades directamente
             <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
-          <p className="text-xs text-muted-foreground italic">
-            Conectado a Stellar MLS · Datos actualizados en tiempo real
-          </p>
         </div>
       </div>
 
