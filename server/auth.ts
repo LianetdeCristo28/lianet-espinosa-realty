@@ -1,5 +1,5 @@
 import { type Request, type Response, type NextFunction } from "express";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { storage } from "./storage";
 import { config } from "./config";
 
