@@ -197,17 +197,20 @@ app.use((req, res, next) => {
 
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
 
-    if (err.code !== "EBADCSRFTOKEN") {
-      console.error("Internal Server Error:", err);
-    }
+    console.error(`[Error ${status}]:`, err.message, err.stack);
 
     if (res.headersSent) {
       return next(err);
     }
 
-    return res.status(status).json({ message });
+    if (process.env.NODE_ENV === "production") {
+      return res.status(status).json({
+        message: status === 400 ? "Datos inválidos" : "Error interno del servidor",
+      });
+    }
+
+    return res.status(status).json({ message: err.message });
   });
 
   // importantly only setup vite in development and after
