@@ -267,23 +267,24 @@ export default function LandingPage() {
                 ¿Te suena familiar?
               </h2>
 
-              <div className="grid md:grid-cols-2 gap-6 text-left">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
                 {[
-                  "No sabes por dónde empezar y Google te confunde más.",
-                  "Te hablan en términos financieros que no entiendes.",
-                  "Tienes miedo de cometer un error que te cueste miles.",
-                  "Sientes que todos tus amigos avanzan menos tú."
+                  { text: "No sabes por dónde empezar y Google te confunde más.", emoji: "🤯", gradient: "from-red-50/50 to-white", span: "md:row-span-2" },
+                  { text: "Te hablan en términos financieros que no entiendes.", emoji: "😵‍💫", gradient: "from-orange-50/50 to-white", span: "" },
+                  { text: "Tienes miedo de cometer un error que te cueste miles.", emoji: "😰", gradient: "from-amber-50/50 to-white", span: "" },
+                  { text: "Sientes que todos tus amigos avanzan menos tú.", emoji: "😔", gradient: "from-rose-50/50 to-white", span: "md:col-span-2" },
                 ].map((pain, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="bg-[#F8F6F2] p-8 rounded-xl shadow-sm border border-[#BDB2A4]/20 hover:shadow-md transition-shadow"
+                    transition={{ delay: i * 0.12 }}
+                    className={`bg-gradient-to-br ${pain.gradient} p-8 rounded-xl shadow-sm border border-[#BDB2A4]/20 hover:shadow-lg transition-all duration-300 group ${pain.span} ${i === 0 ? "flex flex-col justify-center" : ""}`}
+                    data-testid={`card-pain-${i}`}
                   >
-                    <span className="text-red-400 text-xl mb-4 block">✕</span>
-                    <p className="text-lg font-medium text-[#17140F]">{pain}</p>
+                    <span className="text-4xl mb-4 block group-hover:animate-pulse">{pain.emoji}</span>
+                    <p className={`font-medium text-[#17140F] ${i === 0 ? "text-xl md:text-2xl" : "text-lg"}`}>{pain.text}</p>
                   </motion.div>
                 ))}
               </div>
@@ -292,12 +293,21 @@ export default function LandingPage() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                className="mt-16 inline-block relative"
+                className="mt-16 inline-flex flex-col items-center"
               >
-                <p className="text-2xl md:text-3xl font-serif italic text-[#17140F]">
-                  "No estás fallando. Estás caminando sin un mapa."
-                </p>
-                <div className="h-3 bg-primary/30 absolute bottom-1 left-0 right-0 -z-10 -rotate-1" />
+                <div className="relative inline-block">
+                  <p className="text-2xl md:text-3xl font-serif italic text-[#17140F]">
+                    "No estás fallando. Estás caminando sin un mapa."
+                  </p>
+                  <motion.div
+                    initial={{ width: "0%" }}
+                    whileInView={{ width: "100%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                    className="h-4 bg-primary/40 absolute bottom-1 left-0 -z-10 -rotate-1"
+                  />
+                </div>
+                <span className="text-primary font-bold text-lg mt-4">Nosotros somos ese mapa.</span>
               </motion.div>
             </div>
           </div>
