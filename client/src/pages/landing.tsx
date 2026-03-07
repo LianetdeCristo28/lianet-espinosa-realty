@@ -328,16 +328,7 @@ export default function LandingPage() {
               </div>
 
               <div className="space-y-8">
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="text-5xl font-bold text-primary"
-                  data-testid="text-volume-stat"
-                >
-                  $2.1M+
-                  <span className="block text-base font-medium text-muted-foreground mt-1">en propiedades cerradas este año</span>
-                </motion.p>
+
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#17140F]">No tienes que caminar solo.</h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   Cada paso está pensado para darte claridad y seguridad. Nosotros nos encargamos de traducir el idioma bancario, negociar los precios y revisar las letras pequeñas.
