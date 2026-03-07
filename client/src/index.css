@@ -20,7 +20,7 @@ html {
 }
 
 @theme inline {
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "DM Sans", sans-serif;
   --font-serif: "Playfair Display", serif;
   
   --radius-sm: 0.25rem;
@@ -45,7 +45,7 @@ html {
   --color-secondary-foreground: hsl(38 21% 7%);
 
   --color-muted: hsl(38 20% 87%);
-  --color-muted-foreground: hsl(38 10% 40%);
+  --color-muted-foreground: hsl(38 10% 35%);
 
   --color-accent: hsl(29 31% 70%); /* #CBB29B - Highlight Block */
   --color-accent-foreground: hsl(38 21% 7%);

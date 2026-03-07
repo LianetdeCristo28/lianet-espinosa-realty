@@ -46,8 +46,8 @@ export const RealtorsIASection = () => {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">Realtors IA</span>
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#17140F] mb-6">
+          <span className="text-primary font-bold tracking-[0.15em] uppercase text-sm mb-4 block">Realtors IA</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#17140F] mb-6">
             Realtors: Trabaja con IA, Escala sin Límites
           </h2>
           <p className="text-xl text-muted-foreground">

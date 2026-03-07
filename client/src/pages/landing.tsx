@@ -249,8 +249,8 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
               >
-                <span className="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">Compradores</span>
-                <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#17140F] mb-6">
+                <span className="text-primary font-bold tracking-[0.15em] uppercase text-sm mb-4 block">Compradores</span>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#17140F] mb-6">
                   Tu Ruta Hacia la Casa Propia
                 </h2>
                 <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -263,7 +263,7 @@ export default function LandingPage() {
           {/* Pain Points */}
           <div className="py-20 bg-[#E5E1D8]">
             <div className="max-w-4xl mx-auto px-6 text-center">
-              <h2 className="text-3xl md:text-4xl font-serif font-medium mb-16 text-[#17140F]">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-medium mb-16 text-[#17140F]">
                 ¿Te suena familiar?
               </h2>
 
@@ -316,8 +316,8 @@ export default function LandingPage() {
           <div className="py-24 bg-[#F8F6F2] relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6">
               <div className="text-center max-w-3xl mx-auto mb-16">
-                <span className="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">El Método</span>
-                <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#17140F] mb-6">
+                <span className="text-primary font-bold tracking-[0.15em] uppercase text-sm mb-4 block">El Método</span>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#17140F] mb-6">
                   El camino real para comprar tu casa
                 </h2>
                 <p className="text-xl text-muted-foreground">
@@ -357,7 +357,7 @@ export default function LandingPage() {
                   $2.1M+
                   <span className="block text-base font-medium text-muted-foreground mt-1">en propiedades cerradas este año</span>
                 </motion.p>
-                <h2 className="text-4xl font-serif font-bold text-[#17140F]">No tienes que caminar solo.</h2>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#17140F]">No tienes que caminar solo.</h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   Cada paso está pensado para darte claridad y seguridad. Nosotros nos encargamos de traducir el idioma bancario, negociar los precios y revisar las letras pequeñas.
                 </p>
