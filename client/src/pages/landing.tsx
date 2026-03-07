@@ -317,12 +317,6 @@ export default function LandingPage() {
                 <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
                   <img src="/assets/key-hand.png" alt="Mano entregando las llaves de una casa nueva" loading="lazy" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-black/20" />
-                  <div className="absolute bottom-8 left-8 right-8 text-white">
-                    <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20">
-                      <p className="text-lg italic font-serif">"Al fin alguien me explica el camino completo. Ya no tengo que adivinar qué hacer."</p>
-                      <p className="mt-4 text-sm font-bold">— Mariana y Carlos, compraron en 2024</p>
-                    </div>
-                  </div>
                 </div>
 
               </div>
