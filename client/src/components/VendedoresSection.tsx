@@ -41,7 +41,7 @@ export const VendedoresSection = () => {
   const [leadOpen, setLeadOpen] = useState(false);
 
   return (
-    <section id="vendedores" className="py-24 bg-[#E5E1D8]">
+    <section id="vendedores" className="py-24 bg-gradient-to-b from-[#E5E1D8] to-[#F0EDE7]">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

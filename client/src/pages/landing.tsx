@@ -313,7 +313,7 @@ export default function LandingPage() {
           </div>
 
           {/* Staircase */}
-          <div className="py-24 bg-[#F8F6F2] relative overflow-hidden">
+          <div className="py-24 bg-white relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6">
               <div className="text-center max-w-3xl mx-auto mb-16">
                 <span className="text-primary font-bold tracking-[0.15em] uppercase text-sm mb-4 block">El Método</span>
@@ -330,7 +330,7 @@ export default function LandingPage() {
           </div>
 
           {/* Support / Acompañamiento */}
-          <div className="py-24 bg-white relative">
+          <div className="py-24 bg-[#F8F6F2] relative">
             <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
               <div className="space-y-6">
                 <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
@@ -415,10 +415,18 @@ export default function LandingPage() {
           <VendedoresSection />
         </Suspense>
 
+        <div className="h-px bg-gradient-to-r from-transparent via-[#D2B463]/30 to-transparent my-0" />
+
         {/* 4. INVERSIONISTAS */}
         <Suspense fallback={null}>
           <InversionistasSection />
         </Suspense>
+
+        <div className="flex justify-center gap-3 py-6 bg-white">
+          <span className="text-[#D2B463]/30 text-sm">◇</span>
+          <span className="text-[#D2B463]/30 text-sm">◇</span>
+          <span className="text-[#D2B463]/30 text-sm">◇</span>
+        </div>
 
         {/* 5. REALTORS IA */}
         <Suspense fallback={null}>
