@@ -52,7 +52,7 @@ export default function AdminPage() {
 
   async function handleExportCSV() {
     try {
-      const res = await fetch("/api/admin/export-leads");
+      const res = await fetch("/api/admin/export-leads", { credentials: "include" });
       if (!res.ok) throw new Error();
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
@@ -385,6 +385,7 @@ export default function AdminPage() {
               </h2>
               <button
                 onClick={() => setSelectedLead(null)}
+                aria-label="Cerrar"
                 className="text-white/60 hover:text-white text-xl leading-none"
               >
                 ✕
