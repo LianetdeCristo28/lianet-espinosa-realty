@@ -97,6 +97,32 @@ export default function LandingPage() {
           </svg>
 
           <div className="relative z-20 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+
+            {/* Foto en mobile: aparece arriba del texto */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="flex flex-col items-center gap-3 md:hidden"
+            >
+              <div className="relative">
+                <div className="w-36 h-36 rounded-full overflow-hidden border-4 border-[#D2B463] shadow-xl">
+                  <img
+                    src="/images/lianet-hero.jpg"
+                    alt="Lianet Espinosa Ojeda, REALTOR®"
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+                <span className="absolute -bottom-1 -right-1 bg-[#D2B463] text-[#17140F] text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
+                  REALTOR®
+                </span>
+              </div>
+              <div className="text-center">
+                <p className="font-serif font-bold text-[#17140F] text-base">Lianet Espinosa Ojeda</p>
+                <p className="text-[#D2B463] text-sm font-medium">REALTOR® | eXp Realty</p>
+              </div>
+            </motion.div>
+
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -143,80 +169,80 @@ export default function LandingPage() {
                 </Button>
               </div>
 
-
             </motion.div>
 
+            {/* Columna derecha: foto profesional en desktop */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="hidden lg:block relative"
+              className="hidden md:flex flex-col items-center gap-6 relative"
             >
-              <div className="relative w-full max-w-md mx-auto">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                  className="bg-white/70 backdrop-blur-xl border border-white/30 rounded-2xl shadow-2xl p-7"
-                  data-testid="card-floating-stats"
-                >
-                  <div className="space-y-4">
-                    <div>
-                      <p className="text-4xl font-serif font-bold text-[#17140F]">
-                        <AnimatedCounter target={1247} />
-                      </p>
-                      <p className="text-sm text-muted-foreground mt-1">propiedades activas en Florida</p>
-                    </div>
-                    <div className="h-px bg-[#BDB2A4]/20" />
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-xs text-muted-foreground uppercase tracking-wider">Precio promedio</p>
-                        <p className="text-lg font-bold text-[#17140F]">$385,000</p>
-                      </div>
-                      <div className="flex items-center gap-1.5 text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full text-xs font-medium">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                        Actualizado hace 2 min
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.8 }}
-                  className="absolute -bottom-12 -left-8 bg-white/80 backdrop-blur-lg border border-white/30 rounded-xl shadow-2xl p-4 -rotate-2 w-56"
-                  data-testid="card-savings"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
-                      <TrendingDown className="w-4 h-4 text-emerald-600" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Ahorro promedio negociado</p>
-                      <p className="text-sm font-bold text-[#17140F]">$12,400</p>
-                    </div>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 1.0 }}
-                  className="absolute -bottom-8 -right-6 bg-white/80 backdrop-blur-lg border border-white/30 rounded-xl shadow-2xl p-4 rotate-3 w-56"
-                  data-testid="card-closing-time"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
-                      <Clock className="w-4 h-4 text-amber-600" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Tiempo promedio de cierre</p>
-                      <p className="text-sm font-bold text-[#17140F]">32 días</p>
-                    </div>
-                  </div>
-                </motion.div>
+              {/* Foto circular con borde dorado */}
+              <div className="relative">
+                <div className="w-64 h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-[#D2B463] shadow-2xl">
+                  <img
+                    src="/images/lianet-hero.jpg"
+                    alt="Lianet Espinosa Ojeda, REALTOR®"
+                    className="w-full h-full object-cover object-top"
+                    loading="eager"
+                  />
+                </div>
+                {/* Anillo decorativo exterior */}
+                <div className="absolute inset-0 rounded-full border-2 border-[#D2B463]/30 scale-110 pointer-events-none" />
+                {/* Badge REALTOR® */}
+                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#17140F] text-[#D2B463] text-xs font-bold px-4 py-1.5 rounded-full shadow-lg tracking-wider whitespace-nowrap">
+                  REALTOR® · eXp Realty
+                </div>
               </div>
+
+              {/* Nombre debajo de la foto */}
+              <div className="text-center mt-4">
+                <p className="font-serif font-bold text-[#17140F] text-xl lg:text-2xl">
+                  Lianet Espinosa Ojeda
+                </p>
+                <p className="text-[#D2B463] font-medium text-sm lg:text-base mt-0.5">
+                  REALTOR® | eXp Realty
+                </p>
+              </div>
+
+              {/* Tarjeta flotante: ahorro */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+                className="absolute top-4 -left-8 bg-white/80 backdrop-blur-lg border border-white/30 rounded-xl shadow-2xl p-4 -rotate-2 w-52"
+                data-testid="card-savings"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
+                    <TrendingDown className="w-4 h-4 text-emerald-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Ahorro promedio negociado</p>
+                    <p className="text-sm font-bold text-[#17140F]">$12,400</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Tarjeta flotante: cierre */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 1.0 }}
+                className="absolute top-4 -right-6 bg-white/80 backdrop-blur-lg border border-white/30 rounded-xl shadow-2xl p-4 rotate-2 w-52"
+                data-testid="card-closing-time"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
+                    <Clock className="w-4 h-4 text-amber-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Tiempo promedio de cierre</p>
+                    <p className="text-sm font-bold text-[#17140F]">32 días</p>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
 
