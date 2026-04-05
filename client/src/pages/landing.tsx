@@ -105,15 +105,19 @@ export default function LandingPage() {
             >
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E5E1D8] text-[#17140F] text-sm font-medium tracking-wide">
                 <Activity className="w-3.5 h-3.5 text-primary" />
-                Conectado a Stellar MLS · Datos en tiempo real
+                REALTOR® · eXp Realty · Stellar MLS
               </div>
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-[#17140F] leading-[1.1] text-balance">
-                Tu Estrategia Inteligente para el Mercado Inmobiliario de Florida
+                Ayudo a familias hispanas a comprar su primera casa en Florida
               </h1>
 
+              <p className="text-xl font-medium text-[#D2B463] leading-snug max-w-xl text-balance">
+                Sin miedo, sin confusión y con datos reales.
+              </p>
+
               <p className="text-lg text-muted-foreground/80 leading-relaxed max-w-xl text-balance">
-                Compradores, vendedores e inversionistas que toman decisiones con datos, no con suerte.
+                Si eres familia hispana y quieres comprar tu primera casa en Florida, estás en el lugar correcto. Yo te acompaño en cada paso — desde la pre-aprobación hasta la llave en tu mano.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -221,7 +225,84 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* 2. COMPRADORES (engloba: pain points + staircase + soporte + CTA) */}
+        {/* 2. SOBRE MÍ */}
+        <section id="sobre-mi" className="py-16 sm:py-24 bg-[#F8F6F2]">
+          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="relative"
+            >
+              <div className="relative h-[400px] sm:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+                <img
+                  src="/assets/hero-bg.png"
+                  alt="Lianet Espinosa Ojeda, REALTOR® en Florida"
+                  loading="lazy"
+                  className="w-full h-full object-cover object-top"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#17140F]/60 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <p className="text-white font-serif text-lg font-bold">Lianet Espinosa Ojeda</p>
+                  <p className="text-[#D2B463] text-sm font-medium">REALTOR® · eXp Realty · Florida</p>
+                </div>
+              </div>
+              <div className="absolute -top-4 -right-4 bg-[#D2B463] text-[#17140F] rounded-2xl px-5 py-3 shadow-lg rotate-2 text-sm font-bold">
+                New Construction Expert
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="space-y-7"
+            >
+              <div>
+                <span className="text-primary font-bold tracking-[0.15em] uppercase text-sm mb-3 block">Sobre Mí</span>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#17140F] leading-[1.1]">
+                  Soy Lianet.<br />Tu aliada en el camino.
+                </h2>
+              </div>
+
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Llegué a Florida con la misma incertidumbre que sienten muchas familias hispanas cuando piensan en comprar una casa. Sé lo que es no entender los términos, no saber a quién creerle, y sentir que el proceso es para "otros".
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Por eso me convertí en REALTOR®. Para ser el puente que yo hubiera necesitado — alguien que habla tu idioma, entiende tu historia y te guía con datos reales, no con promesas vacías.
+              </p>
+
+              <div className="space-y-3 pt-2">
+                {[
+                  "Especialista en primeros compradores hispanos",
+                  "Experta en New Construction en Florida",
+                  "Acceso directo a Stellar MLS y eXp Realty",
+                  "Atención personalizada en español",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full bg-[#D2B463]/20 flex items-center justify-center shrink-0">
+                      <Check className="w-3 h-3 text-[#D2B463]" />
+                    </div>
+                    <p className="text-[#17140F] font-medium">{item}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-[#17140F] rounded-2xl p-6 mt-4">
+                <p className="font-serif text-[#F8F6F2] text-xl italic leading-relaxed">
+                  "Mi misión es que llegues al cierre entendiendo cada número, sintiéndote segura y orgullosa de la decisión que tomaste."
+                </p>
+                <p className="text-[#D2B463] font-bold text-sm mt-3">— Lianet Espinosa Ojeda, REALTOR®</p>
+              </div>
+            </motion.div>
+
+          </div>
+        </section>
+
+        {/* 3. COMPRADORES (engloba: pain points + staircase + soporte + CTA) */}
         <section id="compradores">
           <div className="pt-12 sm:pt-16 md:pt-24 pb-8 bg-[#F8F6F2]">
             <div className="max-w-4xl mx-auto px-6 text-center">
@@ -291,7 +372,7 @@ export default function LandingPage() {
                     className="h-4 bg-primary/40 absolute bottom-1 left-0 -z-10 -rotate-1"
                   />
                 </div>
-                <span className="text-primary font-bold text-lg mt-4">Nosotros somos ese mapa.</span>
+                <span className="text-primary font-bold text-lg mt-4">Yo soy ese mapa. Yo soy Lianet.</span>
               </motion.div>
             </div>
           </div>

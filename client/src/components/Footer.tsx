@@ -1,10 +1,10 @@
 import { Instagram, Facebook, Linkedin, MessageCircle } from "lucide-react";
 
 const quickLinks = [
+  { label: "Sobre Mí", href: "#sobre-mi" },
   { label: "Compradores", href: "#compradores" },
   { label: "Vendedores", href: "#vendedores" },
   { label: "Inversionistas", href: "#inversionistas" },
-  { label: "Realtors IA", href: "#realtors-ia" },
   { label: "Buscar Propiedades", href: "#buscar" },
 ];
 
@@ -36,11 +36,14 @@ export const Footer = ({ onOpenLeadModal }: FooterProps) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
           <div className="space-y-5">
-            <h3 className="font-serif text-xl text-white" data-testid="text-footer-logo">
-              Camino a tu Propiedad | Florida
-            </h3>
+            <div data-testid="text-footer-logo">
+              <h3 className="font-serif text-xl text-white">
+                Lianet Espinosa Ojeda
+              </h3>
+              <p className="text-[#D2B463] text-sm font-medium mt-0.5">REALTOR® · eXp Realty · Florida</p>
+            </div>
             <p className="text-sm opacity-60 max-w-xs leading-relaxed">
-              Tu estrategia inteligente en el mercado inmobiliario de Florida.
+              Ayudando a familias hispanas a comprar su primera casa en Florida — sin miedo, sin confusión y con datos reales.
             </p>
             <div className="flex gap-3 pt-1">
               {socialLinks.map((s) => (
@@ -100,7 +103,8 @@ export const Footer = ({ onOpenLeadModal }: FooterProps) => {
                   (407) 371-2374
                 </a>
               </li>
-              <li>Licensed Real Estate Agent</li>
+              <li>REALTOR® · Licencia de Florida</li>
+              <li>Brokerage: eXp Realty LLC</li>
             </ul>
             {onOpenLeadModal && (
               <button
@@ -118,12 +122,13 @@ export const Footer = ({ onOpenLeadModal }: FooterProps) => {
         <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 mt-10 mb-6 text-white/30 text-xs">
           <span>eXp Realty LLC</span>
           <span>Stellar MLS</span>
-          <span>Florida Association of Realtors</span>
+          <span>Florida Association of Realtors (FAR)</span>
+          <span>Florida REALTORS®</span>
         </div>
 
         <div className="border-t border-white/10 pt-6 text-center space-y-2">
           <p className="text-xs opacity-40">
-            © 2026 Lianet Espinosa Ojeda | Licensed Real Estate Agent | eXp Realty LLC
+            © 2026 Lianet Espinosa Ojeda | REALTOR® | Licensed Real Estate Agent in Florida | eXp Realty LLC
           </p>
           <p className="text-xs opacity-40">
             Este sitio es de carácter informativo. No constituye asesoría legal ni financiera.

@@ -29,10 +29,10 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
   };
 
   const navLinks = [
+    { label: "Sobre Mí", id: "sobre-mi" },
     { label: "Compradores", id: "compradores" },
     { label: "Vendedores", id: "vendedores" },
     { label: "Inversionistas", id: "inversionistas" },
-    { label: "Realtors IA", id: "realtors-ia" },
     { label: "Buscar", id: "buscar" },
   ];
 
@@ -50,8 +50,10 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
     )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         
-        <div className="text-xl md:text-2xl font-serif font-bold text-[#17140F] tracking-tight">
-          Camino a tu Propiedad | <span className="font-normal italic">Florida</span>
+        <div className="text-base md:text-lg font-serif font-bold text-[#17140F] tracking-tight leading-tight">
+          Lianet Espinosa Ojeda{" "}
+          <span className="text-[#D2B463]">|</span>{" "}
+          <span className="font-normal text-sm md:text-base">REALTOR® · eXp Realty</span>
         </div>
         
         <div className="hidden lg:flex items-center gap-8">
