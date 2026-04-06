@@ -50,16 +50,16 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
     )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         
-        <div className="text-base md:text-lg font-serif font-bold text-[#17140F] tracking-tight leading-tight">
-          Lianet Espinosa Ojeda{" "}
-          <span className="text-[#D2B463]">|</span>{" "}
-          <span className="font-normal text-sm md:text-base">REALTOR® · eXp Realty</span>
-        </div>
+        <img
+          src="/images/lianet-signature.png"
+          alt="Lianet Espinosa Ojeda — REALTOR®"
+          className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto max-w-[160px] sm:max-w-[200px] md:max-w-[240px] lg:max-w-[300px] object-contain object-left"
+        />
         
         <div className="hidden lg:flex items-center gap-8">
-          <div className="flex gap-6">
+          <div className="flex items-center gap-6">
             {navLinks.map((link) => (
-              <button 
+              <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
                 className="text-sm font-medium text-[#17140F]/80 hover:text-primary transition-colors duration-300"
@@ -67,6 +67,14 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
                 {link.label}
               </button>
             ))}
+            <a
+              href="https://ai-success.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] font-bold tracking-[0.12em] uppercase text-[#1C1A15] bg-[#C9A455] hover:bg-[#b8923d] px-4 py-2 rounded-full whitespace-nowrap transition-colors duration-300 shadow-sm"
+            >
+              ✦ Real Estate Success AI
+            </a>
           </div>
           
           <Button 
@@ -116,9 +124,18 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
                   {link.label}
                 </motion.button>
               ))}
-              <Button 
+              <a
+                href="https://ai-success.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileOpen(false)}
+                className="text-center text-[12px] font-bold tracking-[0.12em] uppercase text-[#1C1A15] bg-[#C9A455] hover:bg-[#b8923d] px-4 py-3 rounded-full transition-colors duration-300 shadow-sm mt-2"
+              >
+                ✦ Real Estate Success AI
+              </a>
+              <Button
                 onClick={() => { setMobileOpen(false); onContactClick?.(); }}
-                className="bg-[#D2B463] text-[#17140F] hover:bg-[#D2B463]/90 font-bold rounded-full py-6 mt-4 w-full text-lg shadow-sm"
+                className="bg-[#D2B463] text-[#17140F] hover:bg-[#D2B463]/90 font-bold rounded-full py-6 mt-2 w-full text-lg shadow-sm"
               >
                 <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse shrink-0" />
                 Hablar con un Experto

@@ -13,7 +13,71 @@ const ChatbotAna = lazy(() => import("@/components/ChatbotAna").then(m => ({ def
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Check, Search, TrendingDown, Clock, Activity, Calculator, EyeOff, Shield, Handshake, Compass, FileQuestion, AlertTriangle, Hourglass } from "lucide-react";
 import { motion } from "framer-motion";
+import ScrollExpandHero from '@/components/ui/scroll-expansion-hero';
+import { CircularGallery, GalleryItem } from '@/components/ui/circular-gallery';
 
+const floridaProperties: GalleryItem[] = [
+  {
+    common: 'Villa con Piscina',
+    binomial: 'Orlando · desde $480K',
+    photo: {
+      url: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&auto=format&fit=crop&q=80',
+      text: 'Villa de lujo con piscina en Florida',
+      pos: 'center',
+      by: 'Unsplash',
+    },
+  },
+  {
+    common: 'Casa Moderna',
+    binomial: 'Miami · desde $620K',
+    photo: {
+      url: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&auto=format&fit=crop&q=80',
+      text: 'Casa moderna en Miami',
+      pos: 'center',
+      by: 'Unsplash',
+    },
+  },
+  {
+    common: 'New Construction',
+    binomial: 'Tampa · desde $390K',
+    photo: {
+      url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=80',
+      text: 'Nueva construcción en Tampa',
+      pos: 'center',
+      by: 'Unsplash',
+    },
+  },
+  {
+    common: 'Townhome Premium',
+    binomial: 'Jacksonville · desde $310K',
+    photo: {
+      url: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&auto=format&fit=crop&q=80',
+      text: 'Townhome en Jacksonville',
+      pos: 'center',
+      by: 'Unsplash',
+    },
+  },
+  {
+    common: 'Penthouse Vista',
+    binomial: 'Fort Lauderdale · desde $750K',
+    photo: {
+      url: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&auto=format&fit=crop&q=80',
+      text: 'Penthouse con vista al mar',
+      pos: 'center',
+      by: 'Unsplash',
+    },
+  },
+  {
+    common: 'Single Family Home',
+    binomial: 'Kissimmee · desde $340K',
+    photo: {
+      url: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&auto=format&fit=crop&q=80',
+      text: 'Single family home en Kissimmee',
+      pos: 'center',
+      by: 'Unsplash',
+    },
+  },
+];
 function AnimatedCounter({ target, duration = 2000 }: { target: number; duration?: number }) {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -75,6 +139,13 @@ export default function LandingPage() {
       <main className="min-h-screen bg-background text-foreground font-sans overflow-x-hidden pt-16">
 
         {/* 1. HERO */}
+        <ScrollExpandHero
+          mediaSrc="/images/house-hero.jpg"
+          bgImageSrc="/images/beach-bg.jpg"
+          title="Tu Casa Florida"
+          date="REALTOR® · eXp Realty · Stellar MLS"
+          scrollToExpand="Desliza para explorar"
+        >
         <section id="hero" className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img
@@ -147,6 +218,13 @@ export default function LandingPage() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Button
+                  data-testid="button-por-donde-empezar"
+                  onClick={() => scrollTo('compradores')}
+                  className="w-full sm:w-auto bg-primary text-primary-foreground text-lg px-8 py-7 rounded-full shadow-lg shadow-primary/20 hover:scale-105 transition-transform hover:bg-primary/90 font-medium"
+                >
+                  ¿Por dónde empezar?
+                </Button>
                 <a
                   ref={heroLinkRef}
                   data-testid="button-explorar-propiedades"
@@ -154,95 +232,24 @@ export default function LandingPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={handleHeroExplorar}
-                  className="w-full sm:w-auto inline-flex items-center justify-center bg-primary text-primary-foreground text-lg px-8 py-7 rounded-full shadow-lg shadow-primary/20 hover:scale-105 transition-transform hover:bg-primary/90 font-medium cursor-pointer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center text-foreground border border-[#BDB2A4] text-base px-6 py-3 rounded-full hover:bg-[#E5E1D8] transition-colors font-medium cursor-pointer"
                 >
-                  <Search className="w-5 h-5 mr-2" />
-                  Explorar Propiedades
+                  <Search className="w-4 h-4 mr-2 opacity-70" />
+                  Ver propiedades
                 </a>
-                <Button
-                  data-testid="button-por-donde-empezar"
-                  variant="outline"
-                  onClick={() => scrollTo('compradores')}
-                  className="w-full sm:w-auto text-foreground border-[#BDB2A4] text-lg px-8 py-7 rounded-full hover:bg-[#E5E1D8]"
-                >
-                  ¿Por dónde empezar?
-                </Button>
               </div>
 
             </motion.div>
 
-            {/* Columna derecha: foto profesional en desktop */}
+            {/* Columna derecha: galería circular de propiedades */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="hidden md:flex flex-col items-center gap-6 relative"
+              className="hidden md:block relative"
+              style={{ height: '520px' }}
             >
-              {/* Foto circular con borde dorado */}
-              <div className="relative">
-                <div className="w-64 h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-[#D2B463] shadow-2xl">
-                  <img
-                    src="/images/lianet-hero.jpg"
-                    alt="Lianet Espinosa Ojeda, REALTOR®"
-                    className="w-full h-full object-cover object-top"
-                    loading="eager"
-                  />
-                </div>
-                {/* Anillo decorativo exterior */}
-                <div className="absolute inset-0 rounded-full border-2 border-[#D2B463]/30 scale-110 pointer-events-none" />
-                {/* Badge REALTOR® */}
-                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#17140F] text-[#D2B463] text-xs font-bold px-4 py-1.5 rounded-full shadow-lg tracking-wider whitespace-nowrap">
-                  REALTOR® · eXp Realty
-                </div>
-              </div>
-
-              {/* Nombre debajo de la foto */}
-              <div className="text-center mt-4">
-                <p className="font-serif font-bold text-[#17140F] text-xl lg:text-2xl">
-                  Lianet Espinosa Ojeda
-                </p>
-                <p className="text-[#D2B463] font-medium text-sm lg:text-base mt-0.5">
-                  REALTOR® | eXp Realty
-                </p>
-              </div>
-
-              {/* Tarjeta flotante: ahorro */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-                className="absolute top-4 -left-8 bg-white/80 backdrop-blur-lg border border-white/30 rounded-xl shadow-2xl p-4 -rotate-2 w-52"
-                data-testid="card-savings"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
-                    <TrendingDown className="w-4 h-4 text-emerald-600" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground">Ahorro promedio negociado</p>
-                    <p className="text-sm font-bold text-[#17140F]">$12,400</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Tarjeta flotante: cierre */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.0 }}
-                className="absolute top-4 -right-6 bg-white/80 backdrop-blur-lg border border-white/30 rounded-xl shadow-2xl p-4 rotate-2 w-52"
-                data-testid="card-closing-time"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
-                    <Clock className="w-4 h-4 text-amber-600" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground">Tiempo promedio de cierre</p>
-                    <p className="text-sm font-bold text-[#17140F]">32 días</p>
-                  </div>
-                </div>
-              </motion.div>
+              <CircularGallery items={floridaProperties} radius={380} autoRotateSpeed={0.018} className="w-full h-full" />
             </motion.div>
           </div>
 
@@ -250,6 +257,7 @@ export default function LandingPage() {
             <ArrowDown className="w-6 h-6" />
           </div>
         </section>
+        </ScrollExpandHero>
 
         {/* 2. SOBRE MÍ */}
         <section id="sobre-mi" className="py-16 sm:py-24 bg-[#F8F6F2]">
@@ -262,21 +270,53 @@ export default function LandingPage() {
               transition={{ duration: 0.7 }}
               className="relative"
             >
-              <div className="relative h-[400px] sm:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-                <img
-                  src="/assets/hero-bg.png"
-                  alt="Lianet Espinosa Ojeda, REALTOR® en Florida"
-                  loading="lazy"
-                  className="w-full h-full object-cover object-top"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#17140F]/60 via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <p className="text-white font-serif text-lg font-bold">Lianet Espinosa Ojeda</p>
-                  <p className="text-[#D2B463] text-sm font-medium">REALTOR® · eXp Realty · Florida</p>
+              <div className="relative flex flex-col items-center py-16">
+                {/* Badge izquierdo — Licencia */}
+                <div className="absolute left-0 top-20 bg-white rounded-2xl shadow-lg px-4 py-3 flex items-center gap-3 z-20 border border-[#E2D9CC]">
+                  <div className="w-9 h-9 bg-[#F7F3EC] rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A455" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-[#6B5E4A] font-medium uppercase tracking-wide leading-tight">Licenciada en Florida</p>
+                    <p className="text-base font-bold text-[#1C1A15] mt-0.5" style={{ fontFamily: "'Cormorant Garamond', serif" }}>REALTOR®</p>
+                  </div>
                 </div>
-              </div>
-              <div className="absolute -top-4 -right-4 bg-[#D2B463] text-[#17140F] rounded-2xl px-5 py-3 shadow-lg rotate-2 text-sm font-bold">
-                New Construction Expert
+
+                {/* Foto circular con ring dorado */}
+                <div className="relative w-64 h-64 lg:w-72 lg:h-72">
+                  <div className="absolute -inset-1.5 rounded-full border-[3px] border-[#C9A455] z-10" />
+                  <div className="w-full h-full rounded-full overflow-hidden shadow-2xl border-4 border-white">
+                    <img
+                      src="/images/lianet-hero.jpg"
+                      alt="Lianet Espinosa Ojeda — REALTOR® eXp Realty Florida"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-20 bg-[#1C1A15] text-[#F7F3EC] text-[11px] font-semibold px-5 py-2 rounded-full tracking-widest uppercase whitespace-nowrap shadow-lg">
+                    REALTOR® · eXp Realty
+                  </div>
+                </div>
+
+                {/* Badge derecho — MLS */}
+                <div className="absolute right-0 top-20 bg-white rounded-2xl shadow-lg px-4 py-3 flex items-center gap-3 z-20 border border-[#E2D9CC]">
+                  <div className="w-9 h-9 bg-[#FFF9EC] rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A455" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                      <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-[#6B5E4A] font-medium uppercase tracking-wide leading-tight">Acceso completo</p>
+                    <p className="text-base font-bold text-[#1C1A15] mt-0.5" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Stellar MLS · eXp</p>
+                  </div>
+                </div>
+
+                {/* Badge New Construction */}
+                <div className="mt-10 bg-[#C9A455] text-[#1C1A15] text-[11px] font-bold px-5 py-2 rounded-full tracking-[0.1em] uppercase shadow-md">
+                  ✦ New Construction Expert
+                </div>
               </div>
             </motion.div>
 
