@@ -7,10 +7,10 @@ export default function PrivacidadPage() {
       <div className="bg-[#17140F] py-12 px-6">
         <div className="max-w-3xl mx-auto">
           <Link href="/" className="inline-flex items-center gap-2 text-white/60 hover:text-white text-sm mb-6 transition-colors" data-testid="link-back-home">
-            <ArrowLeft className="w-4 h-4" /> Volver al inicio
+            <ArrowLeft className="w-4 h-4" aria-hidden="true" /> Volver al inicio
           </Link>
           <h1 className="text-3xl md:text-4xl font-serif font-bold text-white">Política de Privacidad</h1>
-          <p className="text-white/60 mt-3">Última actualización: Marzo 2026</p>
+          <p className="text-white/60 mt-3">Última actualización: Abril 2026</p>
         </div>
       </div>
 
@@ -101,10 +101,30 @@ export default function PrivacidadPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-serif font-bold text-[#17140F] mb-3">8. Cookies</h2>
+            <h2 className="text-xl font-serif font-bold text-[#17140F] mb-3">8. Cookies y Tecnologías de Seguimiento</h2>
+            <p className="leading-relaxed mb-3">
+              Este sitio utiliza <strong>cookies técnicas esenciales</strong> para el funcionamiento del sistema de seguridad (CSRF)
+              y la gestión de sesiones. Estas cookies son necesarias y no requieren consentimiento.
+            </p>
+            <p className="leading-relaxed mb-3">
+              Adicionalmente, si otorgas tu <strong>consentimiento explícito</strong> mediante el banner de cookies que aparece
+              al visitar el sitio, podemos cargar las siguientes tecnologías de análisis y publicidad:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mb-3">
+              <li>
+                <strong>Google Analytics 4</strong> — Nos permite analizar el tráfico y el comportamiento de los visitantes
+                en el sitio para mejorar la experiencia. Los datos se anonimizan (anonymize_ip activo).
+                Google retiene estos datos por un máximo de 14 meses según su política estándar.
+              </li>
+              <li>
+                <strong>Meta Pixel (Facebook Pixel)</strong> — Nos permite medir la efectividad de nuestras campañas
+                publicitarias en Facebook e Instagram.
+              </li>
+            </ul>
             <p className="leading-relaxed">
-              Este sitio utiliza cookies técnicas esenciales para el funcionamiento del sistema de seguridad (CSRF)
-              y la gestión de sesiones. No utilizamos cookies de seguimiento ni de publicidad de terceros.
+              Puedes cambiar tu preferencia en cualquier momento recargando la página y usando el banner de cookies,
+              o eliminando las cookies de tu navegador. Sin tu consentimiento, <strong>ninguna</strong> de estas
+              tecnologías de seguimiento se activa.
             </p>
           </section>
 

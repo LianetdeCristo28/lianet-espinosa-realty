@@ -83,7 +83,7 @@ export const ChatbotAna = () => {
         aria-label="Abrir chat con Ana, asistente virtual"
         className="fixed bottom-24 md:bottom-8 right-6 md:right-8 z-50 w-14 h-14 bg-primary text-[#17140F] rounded-full shadow-md flex items-center justify-center hover:scale-105 transition-all duration-300 hover:bg-primary/90"
       >
-        <MessageCircle className="w-6 h-6" />
+        <MessageCircle className="w-6 h-6" aria-hidden="true" />
       </button>
 
       <AnimatePresence>
@@ -114,11 +114,16 @@ export const ChatbotAna = () => {
                 aria-label="Cerrar chat"
                 className="text-white/60 hover:text-white p-2"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
 
-            <div className="flex-1 bg-[#F8F6F2] p-4 overflow-y-auto flex flex-col gap-3">
+            <div
+              role="log"
+              aria-live="polite"
+              aria-label="Conversación con Ana"
+              className="flex-1 bg-[#F8F6F2] p-4 overflow-y-auto flex flex-col gap-3"
+            >
               {messages.map((msg, i) =>
                 msg.type === "bot" ? (
                   <div
@@ -179,7 +184,7 @@ export const ChatbotAna = () => {
                   href="tel:+14073712374"
                   className="flex items-center gap-1.5 text-xs bg-primary text-[#17140F] rounded-full px-4 py-2 hover:bg-primary/90 transition-colors font-medium"
                 >
-                  <Phone className="w-3.5 h-3.5" />
+                  <Phone className="w-3.5 h-3.5" aria-hidden="true" />
                   Llamar
                 </a>
               </div>

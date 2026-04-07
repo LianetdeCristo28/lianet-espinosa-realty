@@ -1,4 +1,18 @@
-import { Instagram, Facebook, Linkedin, MessageCircle } from "lucide-react";
+import { Instagram, Facebook, Linkedin, MessageCircle, Youtube } from "lucide-react";
+
+// Ícono TikTok — no incluido en lucide-react
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z" />
+  </svg>
+);
 
 const quickLinks = [
   { label: "Sobre Mí", href: "#sobre-mi" },
@@ -9,10 +23,42 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: MessageCircle, href: "#", label: "WhatsApp" },
+  {
+    icon: Instagram,
+    href: "https://www.instagram.com/ojedalianetespinosa/",
+    label: "Perfil de Instagram de Lianet Espinosa",
+    testId: "instagram",
+  },
+  {
+    icon: Facebook,
+    href: "https://www.facebook.com/profile.php?id=61558643009760",
+    label: "Perfil de Facebook de Lianet Espinosa",
+    testId: "facebook",
+  },
+  {
+    icon: Linkedin,
+    href: "https://www.linkedin.com/in/lianet-espinosa-ojeda-34a97434b/",
+    label: "Perfil de LinkedIn de Lianet Espinosa",
+    testId: "linkedin",
+  },
+  {
+    icon: TikTokIcon,
+    href: "https://www.tiktok.com/@lianetespinosaojeda",
+    label: "Perfil de TikTok de Lianet Espinosa",
+    testId: "tiktok",
+  },
+  {
+    icon: Youtube,
+    href: "https://www.youtube.com/@LianetEspinosaOjeda",
+    label: "Canal de YouTube de Lianet Espinosa",
+    testId: "youtube",
+  },
+  {
+    icon: MessageCircle,
+    href: "https://wa.me/14073712374",
+    label: "Contactar a Lianet por WhatsApp",
+    testId: "whatsapp",
+  },
 ];
 
 const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -45,16 +91,18 @@ export const Footer = ({ onOpenLeadModal }: FooterProps) => {
             <p className="text-sm opacity-60 max-w-xs leading-relaxed">
               Ayudando a familias hispanas a comprar su primera casa en Florida — sin miedo, sin confusión y con datos reales.
             </p>
-            <div className="flex gap-3 pt-1">
+            <div className="flex flex-wrap gap-2 pt-1">
               {socialLinks.map((s) => (
                 <a
-                  key={s.label}
+                  key={s.testId}
                   href={s.href}
                   aria-label={s.label}
-                  data-testid={`link-social-${s.label.toLowerCase()}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid={`link-social-${s.testId}`}
                   className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#D2B463] hover:text-[#17140F] transition-colors"
                 >
-                  <s.icon className="w-4 h-4" />
+                  <s.icon className="w-4 h-4" aria-hidden="true" />
                 </a>
               ))}
             </div>
@@ -103,7 +151,7 @@ export const Footer = ({ onOpenLeadModal }: FooterProps) => {
                   (407) 371-2374
                 </a>
               </li>
-              <li>REALTOR® · Licencia de Florida</li>
+              <li>REALTOR® · Lic. FL #SL3606490</li>
               <li>Brokerage: eXp Realty LLC</li>
             </ul>
             {onOpenLeadModal && (
@@ -128,11 +176,31 @@ export const Footer = ({ onOpenLeadModal }: FooterProps) => {
 
         <div className="border-t border-white/10 pt-6 text-center space-y-2">
           <p className="text-xs opacity-40">
-            © 2026 Lianet Espinosa Ojeda | REALTOR® | Licensed Real Estate Agent in Florida | eXp Realty LLC
+            © 2026 Lianet Espinosa Ojeda | REALTOR® | Lic. FL #SL3606490 | eXp Realty LLC
           </p>
           <p className="text-xs opacity-40">
             Este sitio es de carácter informativo. No constituye asesoría legal ni financiera.
           </p>
+
+          {/* Equal Housing Opportunity — requerido por Fair Housing Act */}
+          <div className="flex items-center justify-center gap-2 mt-3">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              className="opacity-50"
+            >
+              <path d="M3 9.5L12 3L21 9.5V20C21 20.55 20.55 21 20 21H15V15H9V21H4C3.45 21 3 20.55 3 20V9.5Z" fill="white" />
+              <path d="M9 21V15H15V21" stroke="white" strokeWidth="1.5" fill="none" />
+              <path d="M12 8C12.55 8 13 8.45 13 9C13 9.55 12.55 10 12 10C11.45 10 11 9.55 11 9C11 8.45 11.45 8 12 8Z" fill="#D2B463" />
+              <rect x="3" y="3" width="18" height="18" rx="2" stroke="white" strokeWidth="1" fill="none" />
+            </svg>
+            <span className="text-xs opacity-50">Equal Housing Opportunity</span>
+          </div>
+
           <a
             href="/privacidad"
             data-testid="link-footer-privacy"

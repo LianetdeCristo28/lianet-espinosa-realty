@@ -1,6 +1,22 @@
 declare const __GA4_MEASUREMENT_ID__: string;
 declare const __FB_PIXEL_ID__: string;
 
+// Declaraciones globales para las APIs de analytics de terceros
+declare global {
+  interface Window {
+    gtag: (...args: unknown[]) => void;
+    dataLayer: unknown[];
+    fbq: ((...args: unknown[]) => void) & {
+      callMethod?: (...args: unknown[]) => void;
+      queue: unknown[];
+      push: (...args: unknown[]) => void;
+      loaded: boolean;
+      version: string;
+    };
+    _fbq: Window["fbq"] | undefined;
+  }
+}
+
 const GA4_ID = __GA4_MEASUREMENT_ID__;
 const FB_ID = __FB_PIXEL_ID__;
 
@@ -46,50 +62,51 @@ function loadGA4(measurementId: string) {
   script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
   document.head.appendChild(script);
 
-  (window as any).dataLayer = (window as any).dataLayer || [];
-  function gtag(...args: any[]) {
-    (window as any).dataLayer.push(args);
-  }
-  (window as any).gtag = gtag;
-  gtag("js", new Date());
-  gtag("config", measurementId, {
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function (...args: unknown[]) {
+    window.dataLayer.push(args);
+  };
+  window.gtag("js", new Date());
+  window.gtag("config", measurementId, {
     anonymize_ip: true,
     send_page_view: true,
   });
 }
 
 function loadFBPixel(pixelId: string) {
-  const f = window as any;
-  const n = (f.fbq = function (...args: any[]) {
-    if (n.callMethod) {
-      n.callMethod.apply(n, args);
+  const fbq = function (...args: unknown[]) {
+    if (fbq.callMethod) {
+      fbq.callMethod(...args);
     } else {
-      n.queue.push(args);
+      fbq.queue.push(args);
     }
-  });
-  if (!f._fbq) f._fbq = n;
-  n.push = n;
-  n.loaded = true;
-  n.version = "2.0";
-  n.queue = [];
+  } as Window["fbq"];
+
+  fbq.push = fbq;
+  fbq.loaded = true;
+  fbq.version = "2.0";
+  fbq.queue = [];
+
+  window.fbq = fbq;
+  if (!window._fbq) window._fbq = fbq;
 
   const script = document.createElement("script");
   script.async = true;
   script.src = "https://connect.facebook.net/en_US/fbevents.js";
   document.head.appendChild(script);
 
-  n("init", pixelId);
-  n("track", "PageView");
+  window.fbq("init", pixelId);
+  window.fbq("track", "PageView");
 }
 
 export function trackEvent(eventName: string, params?: Record<string, string | number | boolean>) {
   if (getConsentStatus() !== "accepted") return;
 
-  if (GA4_ID && (window as any).gtag) {
-    (window as any).gtag("event", eventName, params);
+  if (GA4_ID && window.gtag) {
+    window.gtag("event", eventName, params);
   }
 
-  if (FB_ID && (window as any).fbq) {
+  if (FB_ID && window.fbq) {
     const fbEventMap: Record<string, string> = {
       lead_submitted: "Lead",
       diagnostic_completed: "CompleteRegistration",
@@ -97,9 +114,9 @@ export function trackEvent(eventName: string, params?: Record<string, string | n
     };
     const fbEvent = fbEventMap[eventName];
     if (fbEvent) {
-      (window as any).fbq("track", fbEvent);
+      window.fbq("track", fbEvent);
     } else {
-      (window as any).fbq("trackCustom", eventName);
+      window.fbq("trackCustom", eventName);
     }
   }
 }

@@ -27,7 +27,7 @@ interface LeadModalProps {
   searchFilters?: SearchFilters;
 }
 
-const LOFTY_BASE = "https://lianetespinosaojeda.expportal.com";
+import { LOFTY_PORTAL_BASE, LOFTY_LISTING_BASE } from "@shared/constants";
 
 const cities = ["Miami", "Orlando", "Tampa", "Jacksonville", "Fort Lauderdale", "Kissimmee", "Daytona Beach", "Naples", "Otra"];
 const budgets = ["$100K-200K", "$200K-300K", "$300K-400K", "$400K-500K", "$500K-750K", "$750K-1M", "$1M+"];
@@ -54,7 +54,7 @@ const inputClass = "w-full bg-white border border-[#BDB2A4]/20 rounded-lg p-3 ou
 // ─── URL Builder ─────────────────────────────────────────────
 function buildLoftyURL(filters: SearchFilters): string {
   if (!filters.city && !filters.maxPrice && !filters.beds) {
-    return `${LOFTY_BASE}/listing`;
+    return LOFTY_LISTING_BASE;
   }
 
   const condition: Record<string, unknown> = {};
@@ -71,7 +71,7 @@ function buildLoftyURL(filters: SearchFilters): string {
   }
 
   if (Object.keys(condition).length === 0) {
-    return `${LOFTY_BASE}/listing`;
+    return LOFTY_LISTING_BASE;
   }
 
   const params = new URLSearchParams({
@@ -82,7 +82,7 @@ function buildLoftyURL(filters: SearchFilters): string {
     page: "1",
   });
 
-  return `${LOFTY_BASE}/listing?${params.toString()}`;
+  return `${LOFTY_LISTING_BASE}?${params.toString()}`;
 }
 
 function parsePriceToNumber(val: string): string {
@@ -215,7 +215,7 @@ export const LeadModal = ({ open, onOpenChange, context = "general", onLeadCaptu
   const [emailError, setEmailError] = useState("");
   const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [showRedirectTransition, setShowRedirectTransition] = useState(false);
-  const loftyUrlRef = useRef<string>(`${LOFTY_BASE}/listing`);
+  const loftyUrlRef = useRef<string>(LOFTY_LISTING_BASE);
 
   useEffect(() => {
     if (open && searchFilters) {
@@ -285,7 +285,7 @@ export const LeadModal = ({ open, onOpenChange, context = "general", onLeadCaptu
     setFullName(""); setEmail(""); setPhone(""); setCity(""); setBudget(""); setBedrooms("");
     setPool(false); setProfileType(contextToProfile[context] || ""); setPropertyAddress("");
     setMessage(""); setSubmitted(false); setEmailError(""); setAcceptedPrivacy(false); setShowRedirectTransition(false);
-    loftyUrlRef.current = `${LOFTY_BASE}/listing`;
+    loftyUrlRef.current = LOFTY_LISTING_BASE;
     mutation.reset();
   };
 

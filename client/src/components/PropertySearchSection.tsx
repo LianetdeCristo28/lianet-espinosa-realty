@@ -4,6 +4,7 @@ import { Search, ArrowUpRight, MapPin, DollarSign, BedDouble } from "lucide-reac
 import { Button } from "@/components/ui/button";
 import { LeadModal } from "@/components/LeadModal";
 import { trackEvent } from "@/lib/analytics";
+import { LOFTY_LISTING_BASE } from "@shared/constants";
 
 const cities = ["Miami", "Orlando", "Tampa", "Jacksonville", "Fort Lauderdale", "Kissimmee", "Daytona Beach", "Naples"];
 const prices = [
@@ -135,19 +136,24 @@ export const PropertySearchSection = () => {
 
         <div className="flex flex-col items-center mt-6 gap-3">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" aria-hidden="true" />
             <span className="text-green-600 text-xs font-bold">EN VIVO</span>
             <span className="text-muted-foreground text-xs">· Stellar MLS · Datos actualizados</span>
           </div>
           <a
-            href="https://lianetespinosaojeda.expportal.com/listing"
+            href={LOFTY_LISTING_BASE}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-sm text-muted-foreground underline hover:text-[#D2B463] transition-colors"
           >
             O explora todas las propiedades directamente
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
           </a>
+          {/* Disclaimer requerido por Stellar MLS / IDX */}
+          <p className="text-center text-[11px] text-muted-foreground/60 max-w-xl mt-2">
+            Listados cortesía de Stellar MLS. La información se considera confiable pero no garantizada.
+            © {new Date().getFullYear()} Stellar MLS. Todos los derechos reservados.
+          </p>
         </div>
       </div>
 

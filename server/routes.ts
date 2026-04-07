@@ -14,7 +14,7 @@ const sanitizeOptions: sanitizeHtml.IOptions = {
 
 function sanitizeText(value: unknown): string | undefined | null {
   if (value === null || value === undefined) return value;
-  if (typeof value !== "string") return value as any;
+  if (typeof value !== "string") return undefined;
   return sanitizeHtml(value.trim(), sanitizeOptions);
 }
 

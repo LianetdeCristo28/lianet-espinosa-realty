@@ -51,7 +51,7 @@ export const insertLeadSchema = createInsertSchema(leads)
     propertyAddress: z.string().max(200).nullish(),
     message: z.string().max(500).nullish(),
     source: z.string().max(100).nullish(),
-    consentedAt: z.string().nullish(),
+    consentedAt: z.string().datetime({ offset: true, message: "Fecha de consentimiento inválida" }).nullish(),
   });
 
 export type InsertLead = z.infer<typeof insertLeadSchema>;

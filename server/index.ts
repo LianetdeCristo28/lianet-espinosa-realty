@@ -106,7 +106,7 @@ const apiLimiter = rateLimit({
 
 const leadLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10,
+  max: 5,
   standardHeaders: true,
   legacyHeaders: false,
   message: { message: "Demasiadas solicitudes. Por favor espera unos minutos." },
