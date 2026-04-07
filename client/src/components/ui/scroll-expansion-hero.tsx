@@ -47,16 +47,18 @@ const ScrollExpandHero = ({
       }
     };
     const handleScroll = () => { if (!fullyExpanded) window.scrollTo(0, 0); };
+    const handleTouchEnd = () => setTouchStartY(0);
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('touchstart', handleTouchStart, { passive: false });
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    window.addEventListener('touchend', () => setTouchStartY(0));
+    window.addEventListener('touchend', handleTouchEnd);
     return () => {
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
     };
   }, [scrollProgress, fullyExpanded, touchStartY]);
 

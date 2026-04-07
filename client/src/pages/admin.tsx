@@ -71,7 +71,11 @@ export default function AdminPage() {
   async function fetchLeads() {
     setLeadsLoading(true);
     try {
-      const res = await fetch("/api/leads");
+      const res = await fetch("/api/leads", { credentials: "include" });
+      if (res.status === 401) {
+        setAuthenticated(false);
+        return;
+      }
       if (res.ok) {
         const data = await res.json();
         setLeads(data);

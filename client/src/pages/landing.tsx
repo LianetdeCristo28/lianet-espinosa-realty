@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, lazy, Suspense } from "react";
+import React, { useState, useRef, lazy, Suspense } from "react";
 import { Staircase } from "@/components/Staircase";
 import { DiagnosticModal } from "@/components/DiagnosticModal";
 import { LeadModal } from "@/components/LeadModal";
@@ -11,7 +11,7 @@ const RealtorsIASection = lazy(() => import("@/components/RealtorsIASection").th
 const PropertySearchSection = lazy(() => import("@/components/PropertySearchSection").then(m => ({ default: m.PropertySearchSection })));
 const ChatbotAna = lazy(() => import("@/components/ChatbotAna").then(m => ({ default: m.ChatbotAna })));
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Check, Search, TrendingDown, Clock, Activity, Calculator, EyeOff, Shield, Handshake, Compass, FileQuestion, AlertTriangle, Hourglass } from "lucide-react";
+import { ArrowDown, Check, Search, Activity, Calculator, EyeOff, Shield, Handshake, Compass, FileQuestion, AlertTriangle, Hourglass } from "lucide-react";
 import { motion } from "framer-motion";
 import ScrollExpandHero from '@/components/ui/scroll-expansion-hero';
 import { CircularGallery, GalleryItem } from '@/components/ui/circular-gallery';
@@ -78,25 +78,6 @@ const floridaProperties: GalleryItem[] = [
     },
   },
 ];
-function AnimatedCounter({ target, duration = 2000 }: { target: number; duration?: number }) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    let start = 0;
-    const increment = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-    return () => clearInterval(timer);
-  }, [target, duration]);
-  return <>{count.toLocaleString()}</>;
-}
-
 const LOFTY_BASE_URL = "https://lianetespinosaojeda.expportal.com/listing";
 
 export default function LandingPage() {
@@ -108,7 +89,6 @@ export default function LandingPage() {
 
   const handleLeadCaptured = () => {
     setLeadCaptured(true);
-    console.log("[Hero] Lead captured — future clicks go directly to:", LOFTY_BASE_URL);
   };
 
   const openLeadModal = (context?: string) => {
@@ -119,10 +99,7 @@ export default function LandingPage() {
   const handleHeroExplorar = (e: React.MouseEvent) => {
     if (!leadCaptured) {
       e.preventDefault();
-      console.log("[Hero] Lead not captured yet — opening LeadModal");
       openLeadModal("busqueda");
-    } else {
-      console.log("[Hero] Redirecting to:", LOFTY_BASE_URL);
     }
   };
 

@@ -9,13 +9,21 @@ const CONSENT_KEY = "cookie_consent";
 type ConsentStatus = "accepted" | "rejected" | null;
 
 export function getConsentStatus(): ConsentStatus {
-  const value = localStorage.getItem(CONSENT_KEY);
-  if (value === "accepted" || value === "rejected") return value;
+  try {
+    const value = localStorage.getItem(CONSENT_KEY);
+    if (value === "accepted" || value === "rejected") return value;
+  } catch {
+    // localStorage no disponible (modo privado, Safari ITP, etc.)
+  }
   return null;
 }
 
 export function setConsent(status: "accepted" | "rejected") {
-  localStorage.setItem(CONSENT_KEY, status);
+  try {
+    localStorage.setItem(CONSENT_KEY, status);
+  } catch {
+    // localStorage no disponible — continúa sin persistir
+  }
   if (status === "accepted") {
     loadAnalytics();
   }

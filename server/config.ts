@@ -25,12 +25,20 @@ if (!databaseUrl) {
 
 const isSupabase = !!process.env.SUPABASE_DATABASE_URL;
 
+const isProduction = process.env.NODE_ENV === "production";
+
+if (isProduction && !process.env.SESSION_SECRET) {
+  throw new Error(
+    "[Config] SESSION_SECRET es requerido en producción. Configúralo en las variables de entorno de Railway."
+  );
+}
+
 const sessionSecret =
   process.env.SESSION_SECRET ||
   (() => {
     const generated = crypto.randomBytes(48).toString("hex");
     console.warn(
-      "[Config] SESSION_SECRET no configurado. Se generó uno temporal. Configura SESSION_SECRET en los Secrets de Replit para sesiones persistentes."
+      "[Config] SESSION_SECRET no configurado. Se generó uno temporal — las sesiones no persistirán entre reinicios."
     );
     return generated;
   })();
@@ -47,7 +55,7 @@ export const config = {
   sessionSecret,
 
   adminUsername: optional("ADMIN_USERNAME", "admin")!,
-  adminPassword: optional("ADMIN_PASSWORD"),
+  adminPassword: isProduction ? required("ADMIN_PASSWORD") : optional("ADMIN_PASSWORD"),
 
   n8nWebhookUrl: optional("N8N_WEBHOOK_URL"),
 
