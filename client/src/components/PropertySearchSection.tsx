@@ -54,7 +54,7 @@ export const PropertySearchSection = () => {
           viewport={{ once: true }}
           className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-[#BDB2A4]/20"
         >
-          <div className="grid md:grid-cols-3 gap-4 mb-6">
+          <div className="grid sm:grid-cols-3 gap-4 mb-6">
             <div className="space-y-2">
               <label className="text-sm font-medium text-[#17140F]">Ciudad</label>
               <div className="relative">

@@ -83,7 +83,7 @@ export const InversionistasSection = () => {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-[#17140F] text-white rounded-2xl p-10 flex flex-col justify-between min-h-[480px]"
+            className="bg-[#17140F] text-white rounded-2xl p-6 md:p-10 flex flex-col justify-between min-h-0 md:min-h-[480px]"
           >
             <div className="space-y-6">
               <p className="font-serif text-2xl leading-relaxed text-balance">

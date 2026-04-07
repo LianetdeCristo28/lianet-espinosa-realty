@@ -493,7 +493,7 @@ export default function LandingPage() {
                 <Button
                   data-testid="button-comenzar-proceso"
                   onClick={() => openLeadModal("comprador")}
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-8 rounded-full shadow-lg shadow-primary/20 hover:scale-105 transition-all"
+                  className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-8 rounded-full shadow-lg shadow-primary/20 hover:scale-105 transition-all"
                 >
                   Comenzar Mi Proceso
                 </Button>

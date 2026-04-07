@@ -113,7 +113,7 @@ export const RealtorsIASection = ({ onScheduleConsultancy }: RealtorsIASectionPr
             data-testid="button-agendar-consultoria"
             onClick={onScheduleConsultancy ?? undefined}
             disabled={!onScheduleConsultancy}
-            className="bg-[#D2B463] text-[#17140F] hover:bg-[#D2B463]/90 text-xl px-12 py-8 rounded-full shadow-lg hover:scale-105 transition-all disabled:opacity-50"
+            className="w-full sm:w-auto bg-[#D2B463] text-[#17140F] hover:bg-[#D2B463]/90 text-xl px-12 py-8 rounded-full shadow-lg hover:scale-105 transition-all disabled:opacity-50"
           >
             Agendar Consultoría de IA
           </Button>

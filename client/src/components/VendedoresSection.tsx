@@ -58,7 +58,7 @@ export const VendedoresSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {steps.map((step, i) => {
             const Icon = step.icon;
             return (
@@ -91,7 +91,7 @@ export const VendedoresSection = () => {
           <Button
             data-testid="button-solicitar-cma"
             onClick={() => setLeadOpen(true)}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-8 rounded-full shadow-lg shadow-primary/20 hover:scale-105 transition-all"
+            className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-8 rounded-full shadow-lg shadow-primary/20 hover:scale-105 transition-all"
           >
             Solicitar Análisis CMA Gratuito
           </Button>
