@@ -61,6 +61,40 @@ const socialLinks = [
   },
 ];
 
+// Logos de organizaciones para la franja inferior
+const orgLogos = [
+  {
+    src: "/images/web_R_blue.jpg",
+    alt: "National Association of REALTORS®",
+    testId: "logo-nar",
+    height: "h-10",
+  },
+  {
+    src: "/images/equal-housing-opportunity-logo-1200w.png",
+    alt: "Equal Housing Opportunity",
+    testId: "logo-eho",
+    height: "h-10",
+  },
+  {
+    src: "/images/florida-realtors-logo.svg",
+    alt: "Florida Realtors",
+    testId: "logo-florida-realtors",
+    height: "h-10",
+  },
+  {
+    src: "/images/log-c5-.png",
+    alt: "C5",
+    testId: "logo-c5",
+    height: "h-10",
+  },
+  {
+    src: "/images/eXp%20Realty%20-%20Black-01.png",
+    alt: "eXp Realty LLC",
+    testId: "logo-exp-realty",
+    height: "h-8",
+  },
+];
+
 const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
   e.preventDefault();
   const id = href.replace("#", "");
@@ -77,139 +111,157 @@ interface FooterProps {
 
 export const Footer = ({ onOpenLeadModal }: FooterProps) => {
   return (
-    <footer id="footer" className="bg-gradient-to-b from-[#17140F] to-[#0D0B08] text-[#F8F6F2]">
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+    <footer id="footer">
 
-          <div className="space-y-5">
-            <div data-testid="text-footer-logo">
-              <h3 className="font-serif text-xl text-white">
-                Lianet Espinosa Ojeda
-              </h3>
-              <p className="text-[#D2B463] text-sm font-medium mt-0.5">REALTOR® · eXp Realty · Florida</p>
-            </div>
-            <p className="text-sm opacity-60 max-w-xs leading-relaxed">
-              Ayudando a familias hispanas a comprar su primera casa en Florida — sin miedo, sin confusión y con datos reales.
-            </p>
-            <div className="flex flex-wrap gap-2 pt-1">
-              {socialLinks.map((s) => (
-                <a
-                  key={s.testId}
-                  href={s.href}
-                  aria-label={s.label}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-testid={`link-social-${s.testId}`}
-                  className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#D2B463] hover:text-[#17140F] transition-colors"
-                >
-                  <s.icon className="w-4 h-4" aria-hidden="true" />
-                </a>
-              ))}
-            </div>
-          </div>
+      {/* ── Sección principal oscura ───────────────────────────── */}
+      <div className="bg-gradient-to-b from-[#17140F] to-[#0D0B08] text-[#F8F6F2]">
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
-          <div>
-            <h4 className="text-white font-bold mb-5 uppercase tracking-wider text-xs">
-              Enlaces Rápidos
-            </h4>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
+            {/* Columna 1 — Marca + redes sociales */}
+            <div className="space-y-5">
+              <div data-testid="text-footer-logo">
+                <h3 className="font-serif text-xl text-white">
+                  Lianet Espinosa Ojeda
+                </h3>
+                <p className="text-[#D2B463] text-sm font-medium mt-0.5">
+                  REALTOR® · eXp Realty · Florida
+                </p>
+              </div>
+              <p className="text-sm opacity-60 max-w-xs leading-relaxed">
+                Ayudando a familias hispanas a comprar su primera casa en Florida — sin miedo, sin confusión y con datos reales.
+              </p>
+              <div className="flex flex-wrap gap-2 pt-1">
+                {socialLinks.map((s) => (
                   <a
-                    href={link.href}
-                    onClick={(e) => handleSmoothScroll(e, link.href)}
-                    data-testid={`link-footer-${link.href.replace("#", "")}`}
-                    className="text-sm opacity-60 hover:opacity-100 hover:text-[#D2B463] transition-all"
+                    key={s.testId}
+                    href={s.href}
+                    aria-label={s.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid={`link-social-${s.testId}`}
+                    className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#D2B463] hover:text-[#17140F] transition-colors"
                   >
-                    {link.label}
+                    <s.icon className="w-4 h-4" aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Columna 2 — Enlaces rápidos */}
+            <div>
+              <h4 className="text-white font-bold mb-5 uppercase tracking-wider text-xs">
+                Enlaces Rápidos
+              </h4>
+              <ul className="space-y-3">
+                {quickLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      onClick={(e) => handleSmoothScroll(e, link.href)}
+                      data-testid={`link-footer-${link.href.replace("#", "")}`}
+                      className="text-sm opacity-60 hover:opacity-100 hover:text-[#D2B463] transition-all"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Columna 3 — Contacto */}
+            <div>
+              <h4 className="text-white font-bold mb-5 uppercase tracking-wider text-xs">
+                Contacto
+              </h4>
+              <ul className="space-y-3 text-sm opacity-60">
+                <li>
+                  <a
+                    href="mailto:liarealtor7@gmail.com"
+                    data-testid="link-footer-email"
+                    className="hover:opacity-100 hover:text-[#D2B463] transition-all"
+                  >
+                    liarealtor7@gmail.com
                   </a>
                 </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-bold mb-5 uppercase tracking-wider text-xs">
-              Contacto
-            </h4>
-            <ul className="space-y-3 text-sm opacity-60">
-              <li>
-                <a
-                  href="mailto:liarealtor7@gmail.com"
-                  data-testid="link-footer-email"
-                  className="hover:opacity-100 hover:text-[#D2B463] transition-all"
+                <li>
+                  <a
+                    href="tel:+14073712374"
+                    data-testid="link-footer-phone"
+                    className="hover:opacity-100 hover:text-[#D2B463] transition-all"
+                  >
+                    +1 (407) 371-2374
+                  </a>
+                </li>
+                <li>REALTOR® · Lic. FL #SL3606490</li>
+                <li>Brokerage: eXp Realty LLC</li>
+              </ul>
+              {onOpenLeadModal && (
+                <button
+                  onClick={onOpenLeadModal}
+                  data-testid="link-footer-cta"
+                  className="mt-5 text-[#D2B463] hover:text-[#D2B463]/80 font-medium text-sm transition-colors"
                 >
-                  liarealtor7@gmail.com
-                </a>
-              </li>
-              <li>
-                <a
-                  href="tel:+14073712374"
-                  data-testid="link-footer-phone"
-                  className="hover:opacity-100 hover:text-[#D2B463] transition-all"
-                >
-                  (407) 371-2374
-                </a>
-              </li>
-              <li>REALTOR® · Lic. FL #SL3606490</li>
-              <li>Brokerage: eXp Realty LLC</li>
-            </ul>
-            {onOpenLeadModal && (
-              <button
-                onClick={onOpenLeadModal}
-                data-testid="link-footer-cta"
-                className="mt-5 text-[#D2B463] hover:text-[#D2B463]/80 font-medium text-sm transition-colors"
-              >
-                ¿Tienes preguntas? Escríbenos →
-              </button>
-            )}
+                  ¿Tienes preguntas? Escríbenos →
+                </button>
+              )}
+            </div>
+
           </div>
 
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 mt-10 mb-6 text-white/30 text-xs">
-          <span>eXp Realty LLC</span>
-          <span>Stellar MLS</span>
-          <span>Florida Association of Realtors (FAR)</span>
-          <span>Florida REALTORS®</span>
-        </div>
-
-        <div className="border-t border-white/10 pt-6 text-center space-y-2">
-          <p className="text-xs opacity-40">
-            © 2026 Lianet Espinosa Ojeda | REALTOR® | Lic. FL #SL3606490 | eXp Realty LLC
-          </p>
-          <p className="text-xs opacity-40">
-            Este sitio es de carácter informativo. No constituye asesoría legal ni financiera.
-          </p>
-
-          {/* Equal Housing Opportunity — requerido por Fair Housing Act */}
-          <div className="flex items-center justify-center gap-2 mt-3">
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="opacity-50"
-            >
-              <path d="M3 9.5L12 3L21 9.5V20C21 20.55 20.55 21 20 21H15V15H9V21H4C3.45 21 3 20.55 3 20V9.5Z" fill="white" />
-              <path d="M9 21V15H15V21" stroke="white" strokeWidth="1.5" fill="none" />
-              <path d="M12 8C12.55 8 13 8.45 13 9C13 9.55 12.55 10 12 10C11.45 10 11 9.55 11 9C11 8.45 11.45 8 12 8Z" fill="#D2B463" />
-              <rect x="3" y="3" width="18" height="18" rx="2" stroke="white" strokeWidth="1" fill="none" />
-            </svg>
-            <span className="text-xs opacity-50">Equal Housing Opportunity</span>
+          {/* Firma + logo eXp — separador visual */}
+          <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <img
+              src="/images/lianet-signature.png"
+              alt="Firma de Lianet Espinosa Ojeda"
+              className="h-14 opacity-80 object-contain"
+              style={{ filter: "brightness(0) invert(1)" }}
+            />
+            <img
+              src="/images/eXp%20Realty%20-%20White-01.png"
+              alt="eXp Realty LLC"
+              className="h-8 opacity-80 object-contain"
+            />
           </div>
-
-          <a
-            href="/privacidad"
-            data-testid="link-footer-privacy"
-            className="inline-block text-xs text-[#D2B463]/60 underline hover:text-[#D2B463] transition-colors"
-          >
-            Política de Privacidad
-          </a>
         </div>
       </div>
+
+      {/* ── Franja de logos institucionales (fondo claro) ─────── */}
+      <div className="bg-[#F0EDE8] border-t border-[#DDD8D0]">
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+            {orgLogos.map((logo) => (
+              <img
+                key={logo.testId}
+                src={logo.src}
+                alt={logo.alt}
+                data-testid={logo.testId}
+                className={`${logo.height} w-auto object-contain opacity-80 hover:opacity-100 transition-opacity`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Barra de copyright ────────────────────────────────── */}
+      <div className="bg-[#0D0B08] border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/30">
+          <p>
+            © {new Date().getFullYear()} Lianet Espinosa Ojeda · REALTOR® · Lic. FL #SL3606490 · eXp Realty LLC
+          </p>
+          <div className="flex items-center gap-4">
+            <p>Este sitio es de carácter informativo. No constituye asesoría legal ni financiera.</p>
+            <a
+              href="/privacidad"
+              data-testid="link-footer-privacy"
+              className="text-[#D2B463]/50 underline hover:text-[#D2B463] transition-colors whitespace-nowrap"
+            >
+              Política de Privacidad
+            </a>
+          </div>
+        </div>
+      </div>
+
     </footer>
   );
 };
