@@ -88,7 +88,7 @@ const orgLogos = [
     height: "h-10",
   },
   {
-    src: "/images/eXp%20Realty%20-%20Black-01.png",
+    src: "/images/exp-realty-black.png",
     alt: "eXp Realty LLC",
     testId: "logo-exp-realty",
     height: "h-8",
@@ -218,7 +218,7 @@ export const Footer = ({ onOpenLeadModal }: FooterProps) => {
               style={{ filter: "brightness(0) invert(1)" }}
             />
             <img
-              src="/images/eXp%20Realty%20-%20White-01.png"
+              src="/images/exp-realty-white.png"
               alt="eXp Realty LLC"
               className="h-8 opacity-80 object-contain"
             />

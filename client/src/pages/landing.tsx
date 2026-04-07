@@ -171,7 +171,7 @@ export default function LandingPage() {
                   <span className="text-[#D2B463] text-sm font-medium">REALTOR®</span>
                   <span className="text-[#BDB2A4] text-sm">|</span>
                   <img
-                    src="/images/eXp%20Realty%20-%20Black-01.png"
+                    src="/images/exp-realty-black.png"
                     alt="eXp Realty LLC"
                     className="h-4 object-contain"
                   />
@@ -279,13 +279,13 @@ export default function LandingPage() {
                       className="w-full h-full object-cover object-top"
                     />
                   </div>
-                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 z-20 bg-[#1C1A15] text-[#F7F3EC] px-4 py-2 rounded-full whitespace-nowrap shadow-lg flex items-center gap-2">
+                  <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-20 bg-[#1C1A15] text-[#F7F3EC] px-5 py-2.5 rounded-full whitespace-nowrap shadow-lg flex items-center gap-3">
                     <span className="text-[11px] font-semibold tracking-widest uppercase">REALTOR®</span>
                     <span className="text-white/30">·</span>
                     <img
-                      src="/images/eXp%20Realty%20-%20White-01.png"
+                      src="/images/exp-realty-white.png"
                       alt="eXp Realty LLC"
-                      className="h-3 object-contain"
+                      className="h-4 object-contain"
                     />
                   </div>
                 </div>
