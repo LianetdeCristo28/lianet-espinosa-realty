@@ -189,8 +189,11 @@ export const Staircase = () => {
              <path d="M10,90 L90,10" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" fill="none" className="text-primary"/>
         </svg>
 
+        {/* Mobile hint */}
+        <p className="md:hidden text-center text-xs text-muted-foreground mb-2 italic">Toca cada paso para ver los detalles</p>
+
         {/* The Staircase Container */}
-        <div className="w-full h-full grid grid-cols-1 md:grid-cols-8 md:grid-rows-8 gap-4 md:gap-0 relative z-10">
+        <div className="w-full h-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 md:grid-rows-8 gap-3 md:gap-0 relative z-10">
             {stepsData.map((step, index) => {
                 // Determine grid position for literal staircase on desktop
                 // Col 1 = Row 8, Col 2 = Row 7 ... Col 8 = Row 1

@@ -217,7 +217,7 @@ export default function LandingPage() {
                 Si eres familia hispana y quieres comprar tu primera casa en Florida, estás en el lugar correcto. Yo te acompaño en cada paso — desde la pre-aprobación hasta la llave en tu mano.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-4">
                 <Button
                   data-testid="button-por-donde-empezar"
                   onClick={() => scrollTo('compradores')}
@@ -232,7 +232,7 @@ export default function LandingPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={handleHeroExplorar}
-                  className="w-full sm:w-auto inline-flex items-center justify-center text-foreground border border-[#BDB2A4] text-base px-6 py-3 rounded-full hover:bg-[#E5E1D8] transition-colors font-medium cursor-pointer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center text-foreground border border-[#BDB2A4] text-base px-6 py-4 rounded-full hover:bg-[#E5E1D8] transition-colors font-medium cursor-pointer"
                 >
                   <Search className="w-4 h-4 mr-2 opacity-70" />
                   Ver propiedades
@@ -270,22 +270,22 @@ export default function LandingPage() {
               transition={{ duration: 0.7 }}
               className="relative"
             >
-              <div className="relative flex flex-col items-center py-16">
+              <div className="relative flex flex-col items-center py-16 min-w-[300px] sm:min-w-0">
                 {/* Badge izquierdo — Licencia */}
-                <div className="absolute left-0 top-20 bg-white rounded-2xl shadow-lg px-4 py-3 flex items-center gap-3 z-20 border border-[#E2D9CC]">
-                  <div className="w-9 h-9 bg-[#F7F3EC] rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A455" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <div className="absolute left-0 top-20 bg-white rounded-2xl shadow-lg px-2 py-2 sm:px-4 sm:py-3 flex items-center gap-2 sm:gap-3 z-20 border border-[#E2D9CC]">
+                  <div className="w-7 h-7 sm:w-9 sm:h-9 bg-[#F7F3EC] rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A455" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                     </svg>
                   </div>
                   <div>
-                    <p className="text-[10px] text-[#6B5E4A] font-medium uppercase tracking-wide leading-tight">Licenciada en Florida</p>
-                    <p className="text-base font-bold text-[#1C1A15] mt-0.5" style={{ fontFamily: "'Cormorant Garamond', serif" }}>REALTOR®</p>
+                    <p className="text-[9px] sm:text-[10px] text-[#6B5E4A] font-medium uppercase tracking-wide leading-tight">Licenciada FL</p>
+                    <p className="text-sm sm:text-base font-bold text-[#1C1A15] mt-0.5" style={{ fontFamily: "'Cormorant Garamond', serif" }}>REALTOR®</p>
                   </div>
                 </div>
 
                 {/* Foto circular con ring dorado */}
-                <div className="relative w-64 h-64 lg:w-72 lg:h-72">
+                <div className="relative w-52 h-52 sm:w-64 sm:h-64 lg:w-72 lg:h-72">
                   <div className="absolute -inset-1.5 rounded-full border-[3px] border-[#C9A455] z-10" />
                   <div className="w-full h-full rounded-full overflow-hidden shadow-2xl border-4 border-white">
                     <img
@@ -300,16 +300,16 @@ export default function LandingPage() {
                 </div>
 
                 {/* Badge derecho — MLS */}
-                <div className="absolute right-0 top-20 bg-white rounded-2xl shadow-lg px-4 py-3 flex items-center gap-3 z-20 border border-[#E2D9CC]">
-                  <div className="w-9 h-9 bg-[#FFF9EC] rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A455" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <div className="absolute right-0 top-20 bg-white rounded-2xl shadow-lg px-2 py-2 sm:px-4 sm:py-3 flex items-center gap-2 sm:gap-3 z-20 border border-[#E2D9CC]">
+                  <div className="w-7 h-7 sm:w-9 sm:h-9 bg-[#FFF9EC] rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A455" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                       <polyline points="9 22 9 12 15 12 15 22"/>
                     </svg>
                   </div>
                   <div>
-                    <p className="text-[10px] text-[#6B5E4A] font-medium uppercase tracking-wide leading-tight">Acceso completo</p>
-                    <p className="text-base font-bold text-[#1C1A15] mt-0.5" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Stellar MLS · eXp</p>
+                    <p className="text-[9px] sm:text-[10px] text-[#6B5E4A] font-medium uppercase tracking-wide leading-tight">Acceso</p>
+                    <p className="text-sm sm:text-base font-bold text-[#1C1A15] mt-0.5" style={{ fontFamily: "'Cormorant Garamond', serif" }}>Stellar MLS</p>
                   </div>
                 </div>
 
