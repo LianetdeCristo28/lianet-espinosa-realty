@@ -33,6 +33,8 @@ const isDev = config.isDev;
 const productionOrigins = [
   "https://caminoatupropiedad.com",
   "https://www.caminoatupropiedad.com",
+  "https://liamyhomes.com",
+  "https://www.liamyhomes.com",
 ];
 
 app.use(
