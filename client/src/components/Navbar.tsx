@@ -50,11 +50,18 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
     )}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         
-        <img
-          src="/images/lianet-signature.png"
-          alt="Lianet Espinosa Ojeda — REALTOR®"
-          className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto max-w-[160px] sm:max-w-[200px] md:max-w-[240px] lg:max-w-[300px] object-contain object-left"
-        />
+        <div className="flex items-center gap-3 md:gap-4">
+          <img
+            src="/images/lianet-signature.png"
+            alt="Lianet Espinosa Ojeda — REALTOR®"
+            className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto max-w-[160px] sm:max-w-[200px] md:max-w-[240px] lg:max-w-[300px] object-contain object-left"
+          />
+          <img
+            src="/images/exp-realty-black.png"
+            alt="eXp Realty LLC"
+            className="h-4 sm:h-5 md:h-6 w-auto object-contain opacity-75"
+          />
+        </div>
         
         <div className="hidden lg:flex items-center gap-8">
           <div className="flex items-center gap-6">

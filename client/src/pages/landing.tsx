@@ -279,15 +279,17 @@ export default function LandingPage() {
                       className="w-full h-full object-cover object-top"
                     />
                   </div>
-                  <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 z-20 bg-[#1C1A15] text-[#F7F3EC] px-5 py-2.5 rounded-full whitespace-nowrap shadow-lg flex items-center gap-3">
-                    <span className="text-[11px] font-semibold tracking-widest uppercase">REALTOR®</span>
-                    <span className="text-white/30">·</span>
-                    <img
-                      src="/images/exp-realty-white.png"
-                      alt="eXp Realty LLC"
-                      className="h-4 object-contain"
-                    />
-                  </div>
+                </div>
+
+                {/* Pill fuera del w-52 para evitar recorte por overflow-x-hidden */}
+                <div className="-mt-4 z-20 bg-[#1C1A15] text-[#F7F3EC] px-5 py-2.5 rounded-full shadow-lg flex items-center gap-3">
+                  <span className="text-[11px] font-semibold tracking-widest uppercase">REALTOR®</span>
+                  <span className="text-white/30">·</span>
+                  <img
+                    src="/images/exp-realty-white.png"
+                    alt="eXp Realty LLC"
+                    className="h-4 object-contain"
+                  />
                 </div>
 
                 {/* Badge derecho — MLS */}
@@ -305,7 +307,7 @@ export default function LandingPage() {
                 </div>
 
                 {/* Badge New Construction */}
-                <div className="mt-10 bg-[#C9A455] text-[#1C1A15] text-[11px] font-bold px-5 py-2 rounded-full tracking-[0.1em] uppercase shadow-md">
+                <div className="mt-4 bg-[#C9A455] text-[#1C1A15] text-[11px] font-bold px-5 py-2 rounded-full tracking-[0.1em] uppercase shadow-md">
                   ✦ New Construction Expert
                 </div>
               </div>
