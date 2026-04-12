@@ -43,7 +43,7 @@ export const Navbar = ({ onContactClick }: { onContactClick?: () => void }) => {
       style={{ width: `${scrollProgress}%` }}
     />
     <nav role="navigation" aria-label="Navegación principal" className={cn(
-      "sticky top-0 z-50 w-full transition-all duration-300 px-6 py-4",
+      "sticky top-0 z-50 w-full transition-all duration-300 px-4 sm:px-6 py-4 overflow-x-hidden",
       scrolled
         ? "bg-white/80 backdrop-blur-xl shadow-sm border-b border-[#BDB2A4]/10"
         : "bg-transparent"

@@ -76,9 +76,9 @@ const ScrollExpandHero = ({
   const word2 = title?.split(' ').slice(1).join(' ') ?? '';
 
   return (
-    <div className="overflow-x-hidden">
-      <section className="relative flex flex-col items-center min-h-[100dvh]">
-        <div className="relative w-full flex flex-col items-center min-h-[100dvh]">
+    <div className="overflow-hidden w-full max-w-full">
+      <section className="relative flex flex-col items-center min-h-[100dvh] overflow-hidden">
+        <div className="relative w-full flex flex-col items-center min-h-[100dvh] overflow-hidden">
           <motion.div
             className="absolute inset-0 z-0"
             style={{ opacity: 1 - scrollProgress }}
@@ -103,8 +103,8 @@ const ScrollExpandHero = ({
             }} />
           </motion.div>
 
-          <div className="container mx-auto flex flex-col items-center relative z-10">
-            <div className="flex flex-col items-center justify-center w-full h-[100dvh] relative">
+          <div className="container mx-auto flex flex-col items-center relative z-10 overflow-hidden w-full">
+            <div className="flex flex-col items-center justify-center w-full h-[100dvh] relative overflow-hidden">
               <div
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl overflow-hidden"
                 style={{ width: `${w}px`, height: `${h}px`, maxWidth: '95vw', maxHeight: '85vh', boxShadow: '0 0 80px rgba(0,0,0,0.5)', transition: 'none' }}
@@ -117,43 +117,47 @@ const ScrollExpandHero = ({
                 />
               </div>
 
-              <div className="flex flex-col items-center text-center gap-1 w-full relative z-10">
-                <motion.h1
-                  className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#F7F3EC] leading-none"
-                  style={{ transform: `translateX(-${shift}vw)`, fontFamily: "'Cormorant Garamond', serif", letterSpacing: '-0.02em' }}
-                >
-                  {word1}
-                </motion.h1>
-                <motion.h1
-                  className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#C9A455] leading-none"
-                  style={{ transform: `translateX(${shift}vw)`, fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', letterSpacing: '-0.02em' }}
-                >
-                  {word2}
-                </motion.h1>
-              </div>
-
-              <div className="flex flex-col items-center gap-3 mt-6 relative z-10">
-                {date && (
-                  <p className="text-[#F7F3EC]/60 text-xs font-medium uppercase tracking-[0.15em]"
-                    style={{ transform: `translateX(-${shift}vw)` }}>
-                    {date}
-                  </p>
-                )}
-                {scrollToExpand && (
-                  <motion.p
-                    className="text-[#C9A455] text-sm font-medium tracking-wide"
-                    style={{ transform: `translateX(${shift}vw)` }}
-                    animate={{ y: [0, 7, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
+              {!fullyExpanded && (
+                <div className="flex flex-col items-center text-center gap-1 w-full relative z-10 overflow-hidden px-4">
+                  <motion.h1
+                    className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#F7F3EC] leading-none"
+                    style={{ transform: `translateX(${-Math.min(shift, 40)}vw)`, fontFamily: "'Cormorant Garamond', serif", letterSpacing: '-0.02em' }}
                   >
-                    ↓ {scrollToExpand}
-                  </motion.p>
-                )}
-              </div>
+                    {word1}
+                  </motion.h1>
+                  <motion.h1
+                    className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#C9A455] leading-none"
+                    style={{ transform: `translateX(${Math.min(shift, 40)}vw)`, fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', letterSpacing: '-0.02em' }}
+                  >
+                    {word2}
+                  </motion.h1>
+                </div>
+              )}
+
+              {!fullyExpanded && (
+                <div className="flex flex-col items-center gap-3 mt-6 relative z-10 overflow-hidden px-4">
+                  {date && (
+                    <p className="text-[#F7F3EC]/60 text-xs font-medium uppercase tracking-[0.15em]"
+                      style={{ transform: `translateX(${-Math.min(shift, 40)}vw)` }}>
+                      {date}
+                    </p>
+                  )}
+                  {scrollToExpand && (
+                    <motion.p
+                      className="text-[#C9A455] text-sm font-medium tracking-wide"
+                      style={{ transform: `translateX(${Math.min(shift, 40)}vw)` }}
+                      animate={{ y: [0, 7, 0] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      ↓ {scrollToExpand}
+                    </motion.p>
+                  )}
+                </div>
+              )}
             </div>
 
             <motion.div
-              className="w-full"
+              className="w-full max-w-full"
               animate={{ opacity: showContent ? 1 : 0 }}
               transition={{ duration: 0.8 }}
             >

@@ -182,7 +182,7 @@ export const Staircase = () => {
     <div className="w-full relative py-12 px-4 md:px-8 max-w-7xl mx-auto min-h-[600px] flex flex-col md:flex-row gap-8">
       
       {/* LEFT: Staircase Visual */}
-      <div className="flex-1 relative min-h-[500px] flex items-end justify-center md:justify-start overflow-visible pb-12">
+      <div className="flex-1 relative min-h-[500px] flex items-end justify-center md:justify-start overflow-hidden pb-12">
         
         {/* Background Guide Line */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20 hidden md:block" viewBox="0 0 100 100" preserveAspectRatio="none">
